@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwtypno32n54g"]
+
+[ext_resource type="PackedScene" uid="uid://ngdw2vndtgps" path="res://scenes/ball.tscn" id="1_3r786"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_uixiv"]
+[ext_resource type="PackedScene" uid="uid://chu5c7qp3ftwb" path="res://scenes/platform.tscn" id="4_evva4"]
+[ext_resource type="AudioStream" uid="uid://cayskcfb3beh6" path="res://assets/wav/bell1.wav" id="5_7ga3v"]
+[ext_resource type="AudioStream" uid="uid://dfu7rdy8dxk60" path="res://assets/wav/bell2.wav" id="6_t56sp"]
+[ext_resource type="Texture2D" uid="uid://vouuux5aqxva" path="res://assets/png/background.png" id="7_0wc8s"]
+[ext_resource type="AudioStream" uid="uid://d1d8cj3rcdo1m" path="res://assets/wav/bell3.wav" id="7_fvt5y"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_uixiv")
+ball = ExtResource("1_3r786")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="BallTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="platforms" type="Node" parent="."]
+
+[node name="platform" parent="platforms" instance=ExtResource("4_evva4")]
+position = Vector2(-174, -109)
+rotation = 0.360643
+soundName = ExtResource("5_7ga3v")
+
+[node name="platform2" parent="platforms" instance=ExtResource("4_evva4")]
+position = Vector2(216, 62)
+rotation = -0.51707
+soundName = ExtResource("6_t56sp")
+
+[node name="platform3" parent="platforms" instance=ExtResource("4_evva4")]
+position = Vector2(-139, 230)
+rotation = 0.505078
+soundName = ExtResource("7_fvt5y")
+
+[node name="background" type="Sprite2D" parent="."]
+z_index = -1
+scale = Vector2(0.678355, 0.678355)
+texture = ExtResource("7_0wc8s")

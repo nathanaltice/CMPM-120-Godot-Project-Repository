@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=3 uid="uid://chu5c7qp3ftwb"]
+
+[ext_resource type="Texture2D" uid="uid://b6fxm4v4jt1rs" path="res://assets/png/godot-test.png" id="1_1hbse"]
+[ext_resource type="Script" path="res://scripts/platform.gd" id="1_8negq"]
+[ext_resource type="Texture2D" uid="uid://bqhgysf2fajna" path="res://assets/png/particle.png" id="3_ji520"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x15rd"]
+size = Vector2(233.3, 97.5494)
+
+[sub_resource type="Animation" id="Animation_jp5nf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("texture:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 1.78814e-07)]
+}
+
+[sub_resource type="Animation" id="Animation_y2fen"]
+resource_name = "bounce"
+length = 0.7
+capture_included = true
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("texture:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.466667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 2,
+"values": [Vector2(-1, 1.78814e-07), Vector2(-1, 14), Vector2(-1, 1.78814e-07)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x64sa"]
+_data = {
+"RESET": SubResource("Animation_jp5nf"),
+"bounce": SubResource("Animation_y2fen")
+}
+
+[node name="platform" type="StaticBody2D"]
+script = ExtResource("1_8negq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.08016, 1.02512)
+shape = SubResource("RectangleShape2D_x15rd")
+
+[node name="texture" type="Sprite2D" parent="."]
+position = Vector2(-1, 1.78814e-07)
+rotation = 1.56834
+scale = Vector2(0.388771, 0.388771)
+texture = ExtResource("1_1hbse")
+region_enabled = true
+region_rect = Rect2(223.249, 189.092, 258.606, 647.913)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_x64sa")
+}
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+z_index = -1
+emitting = false
+amount = 15
+one_shot = true
+explosiveness = 1.0
+randomness = 0.5
+lifetime_randomness = 0.6
+texture = ExtResource("3_ji520")
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 500)
+initial_velocity_min = 8.6
+initial_velocity_max = 997.5
+scale_amount_min = 0.5
+scale_amount_max = 0.8

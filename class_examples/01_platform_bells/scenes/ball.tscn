@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://ngdw2vndtgps"]
+
+[ext_resource type="Script" path="res://scripts/ball.gd" id="1_gfo3c"]
+[ext_resource type="Texture2D" uid="uid://b6fxm4v4jt1rs" path="res://assets/png/godot-test.png" id="1_j24jm"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_l1w7v"]
+bounce = 0.63
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d70gr"]
+radius = 50.2494
+
+[node name="Ball" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_l1w7v")
+script = ExtResource("1_gfo3c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_j24jm")
+region_enabled = true
+region_rect = Rect2(217.783, 842.662, 103.298, 100.186)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_d70gr")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
