@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://danremgvddoaj"]
+
+[ext_resource type="Texture2D" uid="uid://bx3xigsmc283g" path="res://assets/sprites/SpaceWarfareSheetResized.png" id="1_xeiy2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4jc5i"]
+radius = 11.0
+height = 46.0
+
+[node name="Missile" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -53)
+texture = ExtResource("1_xeiy2")
+region_enabled = true
+region_rect = Rect2(65.499, 208, 34.501, 56)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -53)
+shape = SubResource("CapsuleShape2D_4jc5i")

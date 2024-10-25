@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhqmac70r7fw6"]
+
+[ext_resource type="Script" path="res://scenes/enemy_ship.gd" id="1_qm1v8"]
+[ext_resource type="Texture2D" uid="uid://bx3xigsmc283g" path="res://assets/sprites/SpaceWarfareSheetResized.png" id="1_s5qr5"]
+[ext_resource type="AudioStream" uid="uid://djmwl8hirxb06" path="res://assets/sounds/ship_explosion.wav" id="3_x5eai"]
+
+[node name="EnemyShip" type="Area2D"]
+script = ExtResource("1_qm1v8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = 1.5708
+texture = ExtResource("1_s5qr5")
+region_enabled = true
+region_rect = Rect2(191.922, 0, 96, 154.412)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+rotation = 1.5708
+scale = Vector2(1.0411, 0.949495)
+polygon = PackedVector2Array(-34, -63.206, -24.9737, -28.4362, -4, 63.794, 12, 57.794, 28, -12.206, 47, 2.794, 36, -64.206)
+
+[node name="ShipExplodeSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_x5eai")
+volume_db = -10.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

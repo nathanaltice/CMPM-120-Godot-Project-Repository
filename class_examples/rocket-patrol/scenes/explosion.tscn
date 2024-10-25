@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://b3dp6lik5r56l"]
+
+[ext_resource type="Texture2D" uid="uid://bx3xigsmc283g" path="res://assets/sprites/SpaceWarfareSheetResized.png" id="1_jt5ov"]
+[ext_resource type="Script" path="res://scenes/explosion.gd" id="1_xyhex"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_syrp4"]
+atlas = ExtResource("1_jt5ov")
+region = Rect2(0, 480, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyjwn"]
+atlas = ExtResource("1_jt5ov")
+region = Rect2(160, 480, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iiv04"]
+atlas = ExtResource("1_jt5ov")
+region = Rect2(320, 480, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pwnhg"]
+atlas = ExtResource("1_jt5ov")
+region = Rect2(480, 480, 160, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ucg8n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_syrp4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nyjwn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iiv04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pwnhg")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 10.0
+}]
+
+[node name="Explosion" type="Node"]
+script = ExtResource("1_xyhex")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ucg8n")
+animation = &"explode"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://qquwvu1ujsw6"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_0hit1"]
+[ext_resource type="PackedScene" uid="uid://do2j3eg1yfj1w" path="res://scenes/rocket.tscn" id="1_707sf"]
+[ext_resource type="PackedScene" uid="uid://gov585p7j6cd" path="res://scenes/ui.tscn" id="2_66xml"]
+[ext_resource type="PackedScene" uid="uid://bh4j147rat4nx" path="res://scenes/starfield_bg.tscn" id="3_xtr75"]
+[ext_resource type="PackedScene" uid="uid://cpixe76xg1wlf" path="res://scenes/game_timer.tscn" id="6_t1fci"]
+[ext_resource type="PackedScene" uid="uid://bs42ygcpqjqbw" path="res://scenes/game_start.tscn" id="7_ejw1d"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_0hit1")
+
+[node name="UI" parent="." instance=ExtResource("2_66xml")]
+
+[node name="Rocket" parent="." instance=ExtResource("1_707sf")]
+
+[node name="StarfieldBG" parent="." instance=ExtResource("3_xtr75")]
+
+[node name="GameTimer" parent="." instance=ExtResource("6_t1fci")]
+wait_time = 60.0
+autostart = false
+
+[node name="GameStart" parent="." instance=ExtResource("7_ejw1d")]
+process_mode = 2
+
+[connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]

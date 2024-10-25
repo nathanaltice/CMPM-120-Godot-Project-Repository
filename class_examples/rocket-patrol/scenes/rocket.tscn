@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://do2j3eg1yfj1w"]
+
+[ext_resource type="Script" path="res://scenes/rocket.gd" id="1_0frav"]
+[ext_resource type="Texture2D" uid="uid://bx3xigsmc283g" path="res://assets/sprites/SpaceWarfareSheetResized.png" id="1_i6deq"]
+[ext_resource type="PackedScene" uid="uid://danremgvddoaj" path="res://scenes/missile.tscn" id="2_n0k0i"]
+[ext_resource type="AudioStream" uid="uid://djcg683n38ds" path="res://assets/sounds/rocket_shot.wav" id="4_2swl7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ip3v5"]
+size = Vector2(128, 65)
+
+[node name="Rocket" type="CharacterBody2D"]
+script = ExtResource("1_0frav")
+
+[node name="Base" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = 3.14159
+texture = ExtResource("1_i6deq")
+region_enabled = true
+region_rect = Rect2(336, 184, 128, 104)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 13.5)
+shape = SubResource("RectangleShape2D_ip3v5")
+
+[node name="Missile" parent="." instance=ExtResource("2_n0k0i")]
+
+[node name="ShotSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_2swl7")
+volume_db = -10.0
+
+[connection signal="body_entered" from="Missile" to="." method="_on_missile_body_entered"]
