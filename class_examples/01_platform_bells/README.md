@@ -1,8 +1,6 @@
 # 02 Toy Instrument
 
-This is the finished toy instrument project. 
-
-You can find the starter project [here](./../../starters/02_toy_instrument_starter/)
+This is the finished toy instrument project by Nate Laffan. 
 
 // Description of project
 
