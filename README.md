@@ -1,9 +1,9 @@
 # CMPM 120 Godot Project Repository
  This is the main class repository for CMPM 120 at UC Santa Cruz, administered and maintained by Nathan Altice. Other contributors include Nate Laffan and Nicholas Nolasco.
 
- All projects within use the Godot game engine and gdscript.
+ All projects within this repository use the Godot game engine and its native GDScript programming language.
 
- The repository comprised two primary folders: class_examples and starter_code. The former are small project examples used for class demonstrations; the latter are small scaffolded projects intended for completion during in-class Code/Node Practice sessions.
+ The repository comprises two primary folders: class_examples and starter_code. The former are small project examples used for class demonstrations; the latter are small scaffolded projects intended for completion during in-class Code/Node Practice sessions.
 
 Shield: [![CC BY-NC 4.0][cc-by-nc-shield]][cc-by-nc]
 
