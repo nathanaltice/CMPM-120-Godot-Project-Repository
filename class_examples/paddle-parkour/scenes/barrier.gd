@@ -1,36 +1,44 @@
-extends CharacterBody2D
+extends Area2D
 
 
 var window_size : Vector2			# stores window size
 var barrier_size : Vector2			# stores barrier size
 var barrier_speed : int				# stores barrier speed
-const DEFAULT_SPEED : int = 350		# default starting speed
-var barrier_color : Color
+var spawn_lock := false				# tracks whether to spawn new barrier
 
 
 func _ready() -> void:
 	# get our dimensions
 	window_size = get_window().size
 	barrier_size = $ColorRect.get_size()
-	initialize_barrier()
 
 
 func _process(delta: float) -> void:
-	# move our barrier left
-	var direction = Vector2(-1, 0)
-	var collision = move_and_collide(direction * barrier_speed * delta)
+	# move the barrier left
+	position.x -= barrier_speed * delta
 	
-	# check collision
-	if collision:
-		var collider = collision.get_collider()
-		queue_free()
+	# when current barrier hits mid-screen, recursively spawn next barrier
+	if position.x < window_size.x / 2 and spawn_lock == false:
+		spawn_lock = true
+		get_parent().call_deferred("spawn_barrier")
 	
 	# check for left edge exit
 	if position.x < -barrier_size.x:
-		print('barrier exit')
 		queue_free()
 
 
-func initialize_barrier(speed : int = DEFAULT_SPEED):
-	barrier_speed = speed		# set speed
+func initialize_barrier(speed):
+	# set speed
+	barrier_speed = speed
+	# set x and (random) y-position
+	position.x = window_size.x
 	position.y = randi_range(0, window_size.y - barrier_size.y)
+	# randomize color
+	var rand_color = Color(randf(), randf(), randf(), 1)
+	$ColorRect.color = rand_color
+
+
+# handle collision
+func _on_body_entered(body: Node2D) -> void:
+	Signalbus.player_death.emit()
+	queue_free()

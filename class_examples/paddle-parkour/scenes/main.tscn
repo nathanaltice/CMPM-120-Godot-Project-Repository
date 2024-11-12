@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkq8nk5axjnit"]
+[gd_scene load_steps=2 format=3 uid="uid://bkq8nk5axjnit"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_pjkq5"]
-[ext_resource type="PackedScene" uid="uid://chs7d60flpdx4" path="res://scenes/barrier.tscn" id="2_ajvgt"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_pjkq5")
@@ -11,5 +10,23 @@ offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0, 0, 0, 1)
 
-[node name="Barrier" parent="." instance=ExtResource("2_ajvgt")]
-position = Vector2(1096, 264)
+[node name="SurvivalTimer" type="Timer" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="SurvivalTime" type="Label" parent="HUD"]
+offset_left = 1032.0
+offset_top = 8.0
+offset_right = 1072.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 64
+text = "0"
+
+[node name="DebugBSpeed" type="Label" parent="HUD"]
+offset_left = 392.0
+offset_top = 608.0
+offset_right = 460.0
+offset_bottom = 631.0
+text = "b_speed:"
+
+[connection signal="timeout" from="SurvivalTimer" to="." method="_on_survival_timer_timeout"]

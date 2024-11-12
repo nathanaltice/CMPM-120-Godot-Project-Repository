@@ -13,6 +13,8 @@ func _ready() -> void:
 	paddle_size = $ColorRect.get_size()
 	direction = Vector2(0, 0)
 	
+	# connect to custom signal(s)
+	Signalbus.player_death.connect(_remove_paddle)
 	
 func _process(delta: float) -> void:
 	# handle player input
@@ -32,3 +34,6 @@ func position_paddle():
 	position.x = 32
 	position.y = window_size.y / 2 - paddle_size.y / 2
 	
+
+func _remove_paddle():
+	queue_free()
