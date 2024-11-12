@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkq8nk5axjnit"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_pjkq5"]
+[ext_resource type="PackedScene" uid="uid://chs7d60flpdx4" path="res://scenes/barrier.tscn" id="2_ajvgt"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_pjkq5")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="Barrier" parent="." instance=ExtResource("2_ajvgt")]
+position = Vector2(1096, 264)
