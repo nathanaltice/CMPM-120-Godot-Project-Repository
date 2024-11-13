@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 	move_and_collide(direction * speed * delta)
 	
 	# limit player's vertical paddle position
-	position.y = clamp(position.y, 0, window_size.y - paddle_size.y)
+	position.y = clamp(position.y, 16, window_size.y - paddle_size.y - 16)
 
 
 # places player paddle at center left edge of the screen

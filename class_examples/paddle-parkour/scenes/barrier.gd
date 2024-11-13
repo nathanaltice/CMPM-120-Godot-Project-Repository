@@ -32,7 +32,7 @@ func initialize_barrier(speed):
 	barrier_speed = speed
 	# set x and (random) y-position
 	position.x = window_size.x
-	position.y = randi_range(0, window_size.y - barrier_size.y)
+	position.y = randf_range(16, window_size.y - barrier_size.y - 16)
 	# randomize color
 	var rand_color = Color(randf(), randf(), randf(), 1)
 	$ColorRect.color = rand_color
