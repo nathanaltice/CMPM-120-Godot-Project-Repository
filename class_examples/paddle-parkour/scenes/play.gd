@@ -4,12 +4,13 @@ var window_size : Vector2
 var player_paddle : PackedScene
 var player
 var barrier_paddle : PackedScene
-@export var barrier_speed : int = 450
+@export var barrier_speed : int = 550
 @export var barrier_speed_increment : int = 25
 var survival_time : int
-
+const SPAWN_DELAY : int = 2
 
 func _ready() -> void:
+	# randomize seed
 	randomize()
 	
 	# get our dimensions
@@ -35,6 +36,8 @@ func _process(delta: float) -> void:
 
 func game_start():
 	initialize_paddle()
+	# create temp timer to give player a few seconds before barriers/timer starts
+	await get_tree().create_timer(SPAWN_DELAY).timeout
 	spawn_barrier()
 	$SurvivalTimer.start()
 	
