@@ -1,13 +1,38 @@
-[gd_scene load_steps=6 format=3 uid="uid://crec0yeqd4lie"]
+[gd_scene load_steps=8 format=3 uid="uid://crec0yeqd4lie"]
 
 [ext_resource type="Script" path="res://scenes/play.gd" id="1_ssi51"]
 [ext_resource type="Script" path="res://scenes/camera_2d.gd" id="2_4kl5t"]
 [ext_resource type="FontFile" uid="uid://cv3k2uk2li8jv" path="res://assets/type/Blackout-Midnight.ttf" id="2_qe15p"]
 [ext_resource type="Texture2D" uid="uid://bn43eyfsr3mtu" path="res://assets/img/white_cross.png" id="3_dvkr8"]
+[ext_resource type="Shader" path="res://shaders/menu.gdshader" id="5_x2rof"]
 
 [sub_resource type="Gradient" id="Gradient_3b2xp"]
 offsets = PackedFloat32Array(0, 0.301449, 0.662319, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 0.831373, 0, 1, 0.152941, 0.4, 0.945098, 1, 1, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1chcn"]
+shader = ExtResource("5_x2rof")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.501
+shader_parameter/scanlines_width = 0.174
+shader_parameter/grille_opacity = 0.15
+shader_parameter/resolution = Vector2(640, 480)
+shader_parameter/pixelate = true
+shader_parameter/roll = true
+shader_parameter/roll_speed = 0.5
+shader_parameter/roll_size = 0.96
+shader_parameter/roll_variation = 3.828
+shader_parameter/distort_intensity = 0.018
+shader_parameter/noise_opacity = 0.159
+shader_parameter/noise_speed = 2.0
+shader_parameter/static_noise_intensity = 0.0
+shader_parameter/aberration = 4.75e-08
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.002
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.734
 
 [node name="Play" type="Node2D"]
 script = ExtResource("1_ssi51")
@@ -19,11 +44,9 @@ offset_right = 1144.0
 offset_bottom = 640.0
 color = Color(0, 0, 0, 1)
 
-[node name="SurvivalTimer" type="Timer" parent="."]
-
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="SurvivalTime" type="Label" parent="HUD"]
+[node name="DodgeCount" type="Label" parent="HUD"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -35,7 +58,7 @@ offset_right = 65.0
 offset_bottom = 114.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.479036, 0.482243, 0.899139, 0.313726)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_qe15p")
 theme_override_font_sizes/font_size = 256
 text = "ready"
@@ -43,23 +66,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 0
 
-[node name="DebugBSpeed" type="Label" parent="HUD"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -34.0
-offset_top = -40.0
-offset_right = 34.0
-offset_bottom = -17.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "b_speed:"
-
 [node name="StarParticles" type="CPUParticles2D" parent="."]
 position = Vector2(1152, 324)
-amount = 250
+amount = 500
 lifetime = 3.0
 texture = ExtResource("3_dvkr8")
 emission_shape = 3
@@ -75,29 +84,116 @@ color_ramp = SubResource("Gradient_3b2xp")
 [node name="Borders" type="Node" parent="."]
 
 [node name="ColorBorder" type="ColorRect" parent="Borders"]
-offset_left = -24.0
-offset_right = 16.0
+offset_left = -40.0
+offset_right = 24.0
 offset_bottom = 648.0
 
 [node name="ColorBorder2" type="ColorRect" parent="Borders"]
-offset_left = 1136.0
-offset_right = 1176.0
+offset_left = 1128.0
+offset_right = 1192.0
 offset_bottom = 648.0
 
 [node name="ColorBorder3" type="ColorRect" parent="Borders"]
-offset_top = -24.0
+offset_top = -40.0
 offset_right = 1152.0
-offset_bottom = 16.0
+offset_bottom = 24.0
 color = Color(0.231373, 1, 0.34902, 1)
 
 [node name="ColorBorder4" type="ColorRect" parent="Borders"]
-offset_top = 632.0
+offset_top = 624.0
 offset_right = 1152.0
-offset_bottom = 672.0
+offset_bottom = 688.0
 color = Color(1, 0.313726, 1, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
+position = Vector2(576, 324)
+ignore_rotation = false
 script = ExtResource("2_4kl5t")
 
-[connection signal="timeout" from="SurvivalTimer" to="." method="_on_survival_timer_timeout"]
+[node name="Results" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="TopLine" type="Label" parent="Results"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -71.5
+offset_top = 168.0
+offset_right = 71.5
+offset_bottom = 197.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.156863, 0.847059, 0.192157, 1)
+theme_override_fonts/font = ExtResource("2_qe15p")
+theme_override_font_sizes/font_size = 48
+text = "dodged"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BottomLine" type="Label" parent="Results"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -107.0
+offset_top = 424.0
+offset_right = 107.0
+offset_bottom = 468.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.941176, 0.235294, 0.764706, 1)
+theme_override_fonts/font = ExtResource("2_qe15p")
+theme_override_font_sizes/font_size = 48
+text = "paddles"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Restart" type="Label" parent="Results"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -365.0
+offset_top = 560.0
+offset_right = 365.0
+offset_bottom = 604.0
+grow_horizontal = 2
+pivot_offset = Vector2(365, 0)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_qe15p")
+theme_override_font_sizes/font_size = 48
+text = "press space to parkour more"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NewBest" type="Label" parent="Results"]
+visible = false
+layout_mode = 0
+offset_left = 688.0
+offset_top = 152.0
+offset_right = 744.0
+offset_bottom = 201.0
+rotation = 0.38037
+theme_override_fonts/font = ExtResource("2_qe15p")
+theme_override_font_sizes/font_size = 24
+text = "NEW
+BEST!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShaderLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="ShaderLayer"]
+material = SubResource("ShaderMaterial_1chcn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RainbowTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[connection signal="timeout" from="RainbowTimer" to="." method="_on_rainbow_timer_timeout"]

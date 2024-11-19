@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 Signalbus="*res://scripts/SignalBus.gd"
 
+[display]
+
+window/size/resizable=false
+
 [input]
 
 paddle_up={

@@ -3,17 +3,17 @@
 [ext_resource type="Script" path="res://scenes/barrier.gd" id="1_gx1db"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0vtt5"]
-size = Vector2(20, 120)
+size = Vector2(24, 120)
 
-[node name="Barrier" type="Area2D"]
+[node name="Barrier" type="Area2D" groups=["barriers"]]
 script = ExtResource("1_gx1db")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 20.0
+offset_right = 24.0
 offset_bottom = 120.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(10, 60)
+position = Vector2(12, 60)
 shape = SubResource("RectangleShape2D_0vtt5")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

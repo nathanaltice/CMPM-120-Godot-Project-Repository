@@ -5,13 +5,19 @@ var window_size : Vector2		# stores window size
 var speed : float = 500			# player paddle speed
 var paddle_size : Vector2		# stores paddle size
 var direction : Vector2			# stores paddle direction
+var explosion_scene : PackedScene
 
+@onready var paddle_rectangle = $ColorRect
 
 func _ready() -> void:
 	# get our dimensions
 	window_size = get_window().size
-	paddle_size = $ColorRect.get_size()
+	paddle_size = paddle_rectangle.get_size()
 	direction = Vector2(0, 0)
+	z_index = 10
+	
+	# preload explosion particles
+	explosion_scene = preload("res://scenes/paddle_explosion.tscn")
 	
 	# connect to custom signal(s)
 	Signalbus.player_death.connect(_remove_paddle)
@@ -26,14 +32,29 @@ func _process(delta: float) -> void:
 	move_and_collide(direction * speed * delta)
 	
 	# limit player's vertical paddle position
-	position.y = clamp(position.y, 16, window_size.y - paddle_size.y - 16)
+	position.y = clamp(position.y, 24, window_size.y - paddle_size.y * scale.y - 24)
 
 
 # places player paddle at center left edge of the screen
 func position_paddle():
-	position.x = 32
+	position.x = 48
 	position.y = window_size.y / 2 - paddle_size.y / 2
-	
+
+
+# half-size the paddle's height
+func shrink():
+	scale.y = 0.5
+
 
 func _remove_paddle():
+	# instance particle explosion and set to paddle position/scale
+	var explosion = explosion_scene.instantiate()
+	get_parent().add_child(explosion)
+	explosion.emitting = true
+	explosion.one_shot = true
+	explosion.position = position
+	explosion.position.y += paddle_size.y / 2
+	explosion.scale.y = scale.y
+	
+	# release node
 	queue_free()
