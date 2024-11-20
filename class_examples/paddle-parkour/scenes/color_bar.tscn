@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://q8l0g0avr6ah"]
 
-[ext_resource type="Script" path="res://color_bar.gd" id="1_r3ter"]
+[ext_resource type="Script" path="res://scenes/color_bar.gd" id="1_r3ter"]
 
 [node name="ColorBar" type="ColorRect"]
 offset_right = 24.0

@@ -1,11 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmpgsgdjvpllc"]
+[gd_scene load_steps=9 format=3 uid="uid://bmpgsgdjvpllc"]
 
 [ext_resource type="Script" path="res://scenes/menu.gd" id="1_i4s4w"]
 [ext_resource type="FontFile" uid="uid://cv3k2uk2li8jv" path="res://assets/type/Blackout-Midnight.ttf" id="1_kaxfx"]
 [ext_resource type="Shader" path="res://shaders/menu.gdshader" id="3_rdwhw"]
+[ext_resource type="AudioStream" uid="uid://cn35tqdrpdtxv" path="res://assets/bgm/Deck Blood.wav" id="4_6d2n0"]
+[ext_resource type="AudioStream" uid="uid://ds7yqnlp6dbq1" path="res://assets/sfx/rev.wav" id="5_c3qsk"]
+[ext_resource type="AudioStream" uid="uid://dw38a1bkn4aan" path="res://assets/sfx/swell.wav" id="6_hx4on"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2qr4"]
-bg_color = Color(0.959066, 0.55964, 0.744799, 1)
+bg_color = Color(1, 1, 0.0352941, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lj37e"]
 shader = ExtResource("3_rdwhw")
@@ -54,13 +57,13 @@ grow_vertical = 2
 scale = Vector2(1, 1.2)
 color = Color(0.933333, 0, 0.415686, 1)
 
-[node name="Control" type="Control" parent="."]
+[node name="TitleControl" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="Title" type="Label" parent="Control"]
+[node name="Title" type="Label" parent="TitleControl"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -77,7 +80,7 @@ theme_override_fonts/font = ExtResource("1_kaxfx")
 theme_override_font_sizes/font_size = 108
 text = "Paddle Parkour"
 
-[node name="Instructions" type="Label" parent="Control"]
+[node name="Instructions" type="Label" parent="TitleControl"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -97,24 +100,79 @@ text = "Up / Down Arrow to dodge, spacebar to start"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Prompt" type="Label" parent="Control"]
-visible = false
+[node name="LabelControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Credit" type="Label" parent="LabelControl"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -250.0
-offset_top = -200.0
-offset_right = 250.0
-offset_bottom = -156.0
+offset_left = -592.0
+offset_top = -232.0
+offset_right = -184.0
+offset_bottom = -192.0
 grow_horizontal = 2
 grow_vertical = 0
+rotation = 0.0337817
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_kaxfx")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_o2qr4")
-text = "Press space to play"
+text = "Nathan Altice"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Edition" type="Label" parent="LabelControl"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 192.0
+offset_top = -424.0
+offset_right = 640.0
+offset_bottom = -384.0
+grow_horizontal = 2
+grow_vertical = 0
+rotation = -0.0472365
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_kaxfx")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_o2qr4")
+text = "2024 godot edition"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Borders" type="Node" parent="LabelControl"]
+
+[node name="LeftBorder" type="ColorRect" parent="LabelControl/Borders"]
+offset_left = -64.0
+offset_bottom = 648.0
+
+[node name="RightBorder" type="ColorRect" parent="LabelControl/Borders"]
+offset_left = 1152.0
+offset_right = 1216.0
+offset_bottom = 648.0
+
+[node name="TopBorder" type="ColorRect" parent="LabelControl/Borders"]
+offset_top = -64.0
+offset_right = 1152.0
+color = Color(0.231373, 1, 0.34902, 1)
+
+[node name="BottomBorder" type="ColorRect" parent="LabelControl/Borders"]
+offset_top = 648.0
+offset_right = 1152.0
+offset_bottom = 712.0
+color = Color(1, 0.313726, 1, 1)
 
 [node name="ShaderLayer" type="CanvasLayer" parent="."]
 
@@ -125,3 +183,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_6d2n0")
+autoplay = true
+
+[node name="RevSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_c3qsk")
+volume_db = -10.0
+
+[node name="SwellSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_hx4on")
+volume_db = -10.0

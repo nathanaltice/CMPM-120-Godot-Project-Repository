@@ -1,10 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://crec0yeqd4lie"]
+[gd_scene load_steps=12 format=3 uid="uid://crec0yeqd4lie"]
 
 [ext_resource type="Script" path="res://scenes/play.gd" id="1_ssi51"]
 [ext_resource type="Script" path="res://scenes/camera_2d.gd" id="2_4kl5t"]
 [ext_resource type="FontFile" uid="uid://cv3k2uk2li8jv" path="res://assets/type/Blackout-Midnight.ttf" id="2_qe15p"]
 [ext_resource type="Texture2D" uid="uid://bn43eyfsr3mtu" path="res://assets/img/white_cross.png" id="3_dvkr8"]
 [ext_resource type="Shader" path="res://shaders/menu.gdshader" id="5_x2rof"]
+[ext_resource type="AudioStream" uid="uid://btdt7s6o8mlxt" path="res://assets/sfx/clang.mp3" id="6_b1rt4"]
+[ext_resource type="AudioStream" uid="uid://ec2tr5u3c1le" path="res://assets/sfx/Torn Creatures.wav" id="7_2m2x1"]
+[ext_resource type="AudioStream" uid="uid://xjutuloq3tj1" path="res://assets/sfx/blip.wav" id="7_jr2en"]
+[ext_resource type="AudioStream" uid="uid://drfg2qnc8qs01" path="res://assets/sfx/splode.wav" id="8_8eeen"]
 
 [sub_resource type="Gradient" id="Gradient_3b2xp"]
 offsets = PackedFloat32Array(0, 0.301449, 0.662319, 1)
@@ -195,5 +199,23 @@ grow_vertical = 2
 
 [node name="RainbowTimer" type="Timer" parent="."]
 wait_time = 0.05
+
+[node name="ShakeSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_b1rt4")
+volume_db = -2.0
+
+[node name="DodgeSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_jr2en")
+volume_db = -18.0
+pitch_scale = 0.48
+
+[node name="SplodeSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_8eeen")
+volume_db = -4.0
+pitch_scale = 0.48
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_2m2x1")
+volume_db = -2.0
 
 [connection signal="timeout" from="RainbowTimer" to="." method="_on_rainbow_timer_timeout"]

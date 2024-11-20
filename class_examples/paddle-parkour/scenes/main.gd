@@ -1,6 +1,5 @@
 extends Node
 
-
 var menu_scene : PackedScene
 
 

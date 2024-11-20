@@ -47,10 +47,13 @@ func _ready() -> void:
 	game_start()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if spawn_lock:
 		if Input.is_action_just_pressed("menu_select"):
 			game_start()
+
+	if Input.is_action_just_pressed("debug_toggle"):
+		get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
 
 func game_start():
@@ -69,6 +72,16 @@ func game_start():
 	# position player paddle
 	initialize_paddle()
 	
+	# shake camera
+	camera_view.apply_shake()
+	
+	# play SFX
+	$ShakeSFX.play()
+	
+	# start music
+	$BGM.volume_db = -2
+	$BGM.play()
+	
 	# hide game results node
 	game_results.hide()
 	
@@ -85,6 +98,11 @@ func _game_over():
 	# shake camera back into place
 	camera_view.apply_shake()
 	camera_view.rotation = 0
+	
+	# play SFX
+	$SplodeSFX.play()
+	var volume_tween = create_tween()
+	volume_tween.tween_property($BGM, "volume_db", -80, 1.5)
 	
 	# tween alpha of ready/dodge count text
 	var alpha_tween = create_tween()
@@ -129,6 +147,9 @@ func _barrier_dodged() -> void:
 	dodge_count += 1
 	$HUD/DodgeCount.text = str(dodge_count)
 	
+	# play SFX
+	$DodgeSFX.play()
+	
 	# speed up every 5 dodges
 	if dodge_count % 5 == 0:
 		barrier_speed += barrier_speed_increment
@@ -148,6 +169,9 @@ func _barrier_dodged() -> void:
 		var aberration_tween = create_tween()
 		aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", 0.2, 0.25)
 		aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", 0, 0.25)
+		
+		# play SFX
+		$ShakeSFX.play()
 	
 	# shrink paddle at 50 dodges
 	if dodge_count == 50:
