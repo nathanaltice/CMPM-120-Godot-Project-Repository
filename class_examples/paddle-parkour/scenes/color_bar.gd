@@ -7,6 +7,7 @@ func _ready() -> void:
 
 
 func start_yoyo_tween() -> void:
+	# make rectangles tween up and down
 	var rand_duration = randf_range(1, 3)
 	var start_y = position.y
 	var yoyo_tween = create_tween().set_loops()

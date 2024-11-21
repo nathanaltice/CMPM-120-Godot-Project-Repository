@@ -9,10 +9,6 @@ var rng = RandomNumberGenerator.new()
 var shake_strength : float = 0.0
 
 
-func _ready() -> void:
-	pass
-
-
 func apply_shake():
 	shake_strength = randomStrength
 

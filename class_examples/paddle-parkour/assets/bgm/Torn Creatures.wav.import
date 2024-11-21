@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://ec2tr5u3c1le"
-path="res://.godot/imported/Torn Creatures.wav-8a64a2f2060bf35fae5af16bc084d49a.sample"
+path="res://.godot/imported/Torn Creatures.wav-de1a60abc023f842c4c509581bf95b09.sample"
 
 [deps]
 
-source_file="res://assets/sfx/Torn Creatures.wav"
-dest_files=["res://.godot/imported/Torn Creatures.wav-8a64a2f2060bf35fae5af16bc084d49a.sample"]
+source_file="res://assets/bgm/Torn Creatures.wav"
+dest_files=["res://.godot/imported/Torn Creatures.wav-de1a60abc023f842c4c509581bf95b09.sample"]
 
 [params]
 

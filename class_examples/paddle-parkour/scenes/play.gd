@@ -1,20 +1,32 @@
 extends Node2D
 
-var window_size : Vector2
-var player_paddle : PackedScene
-var player
-var barrier_paddle : PackedScene
-@export var barrier_speed : int = 550
-@export var barrier_speed_increment : int = 25
 const SPAWN_DELAY : int = 2
+const RESTART_DELAY : float = 1.5
+const BARRIER_SPEED_MAX : int = 1300
+
+var window_size : Vector2
+var player
+var player_paddle : PackedScene = preload("res://scenes/paddle.tscn")
+var barrier_paddle : PackedScene = preload("res://scenes/barrier.tscn")
+var barrier_speed : int
+var barrier_speed_increment : int = 25
 var spawn_lock : bool
-@onready var camera_view = $Camera2D
+var input_unlocked : bool
 var cam_tilt_direction = 1
-@onready var game_results = $Results
 var dodge_count : int = 0
 var high_score : int = 0
-const WHITE_FULL_ALPHA := Color(1, 1, 1, 1)
-const WHITE_PARTIAL_ALPHA := Color(1, 1, 1, 0.25)
+
+@onready var game_results = $Results
+@onready var results_restart_label = $Results/Restart
+@onready var camera_view = $Camera2D
+@onready var shader_rect = $ShaderLayer/ColorRect
+@onready var dodge_count_label = $HUD/DodgeCount
+@onready var border_nodes = $Borders
+@onready var bgm_play = $BGM/GameBGM
+@onready var bgm_wait = $BGM/WaitBGM
+@onready var shake_sfx = $SFX/ShakeSFX
+@onready var dodge_sfx = $SFX/DodgeSFX
+
 
 func _ready() -> void:
 	# randomize seed
@@ -23,35 +35,33 @@ func _ready() -> void:
 	# get our dimensions
 	window_size = get_window().size
 	
-	# preload scenes
-	player_paddle = preload("res://scenes/paddle.tscn")
-	barrier_paddle = preload("res://scenes/barrier.tscn")
-	
 	# initialize game variables
 	dodge_count = 0
 	high_score = 0
 	spawn_lock = false
+	input_unlocked = true
 	
 	# connect to custom signal(s)
 	Signalbus.barrier_dodged.connect(_barrier_dodged)
-	Signalbus.player_death.connect(_game_over)
+	Signalbus.player_died.connect(_game_ended)
 	
 	# tween shader aberration property
 	var aberration_tween = create_tween().set_loops()
-	aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", 0.1, 5)
-	aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", 0, 5)
-	aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", -0.1, 5)
-	aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", 0, 5)
+	aberration_tween.tween_property(shader_rect, "material:shader_parameter/aberration", 0.1, 5)
+	aberration_tween.tween_property(shader_rect, "material:shader_parameter/aberration", 0, 5)
+	aberration_tween.tween_property(shader_rect, "material:shader_parameter/aberration", -0.1, 5)
+	aberration_tween.tween_property(shader_rect, "material:shader_parameter/aberration", 0, 5)
 	
 	# start game
 	game_start()
 
 
 func _process(_delta: float) -> void:
-	if spawn_lock:
+	if input_unlocked and spawn_lock:
 		if Input.is_action_just_pressed("menu_select"):
 			game_start()
 
+	# DEBUG
 	if Input.is_action_just_pressed("debug_toggle"):
 		get_tree().change_scene_to_file("res://scenes/menu.tscn")
 
@@ -60,14 +70,12 @@ func game_start():
 	# reset game state
 	dodge_count = 0
 	spawn_lock = false
-	barrier_speed = 550
-	$HUD/DodgeCount.text = "READY"
-	#$HUD/DodgeCount.set("theme_override_colors/font_color", WHITE_FULL_ALPHA)
-	#$ShaderLayer/ColorRect.material.set("shader_parameter/abberation", 0)
-	
+	barrier_speed = 700
+	dodge_count_label.text = "READY"
+
 	# tween alpha of ready/dodge count text
 	var alpha_tween = create_tween()
-	alpha_tween.tween_property($HUD/DodgeCount, "modulate:a", 0.25, SPAWN_DELAY)
+	alpha_tween.tween_property(dodge_count_label, "modulate:a", 0.25, SPAWN_DELAY)
 	
 	# position player paddle
 	initialize_paddle()
@@ -76,58 +84,22 @@ func game_start():
 	camera_view.apply_shake()
 	
 	# play SFX
-	$ShakeSFX.play()
+	shake_sfx.play()
 	
-	# start music
-	$BGM.volume_db = -2
-	$BGM.play()
+	# prepare music
+	bgm_play.volume_db = -2
+	bgm_play.play()
+	if bgm_wait.playing:
+		bgm_wait.stop()
 	
 	# hide game results node
 	game_results.hide()
 	
 	# create temp timer to give player a few seconds before barriers/timer starts
 	await get_tree().create_timer(SPAWN_DELAY).timeout
-	$HUD/DodgeCount.text = str(dodge_count)
+	dodge_count_label.text = str(dodge_count)
 	spawn_barrier()
 
-
-func _game_over():
-	# stop timer(s)
-	$RainbowTimer.stop()
-	
-	# shake camera back into place
-	camera_view.apply_shake()
-	camera_view.rotation = 0
-	
-	# play SFX
-	$SplodeSFX.play()
-	var volume_tween = create_tween()
-	volume_tween.tween_property($BGM, "volume_db", -80, 1.5)
-	
-	# tween alpha of ready/dodge count text
-	var alpha_tween = create_tween()
-	alpha_tween.tween_property($HUD/DodgeCount, "modulate:a", 1, SPAWN_DELAY)
-	
-	# shut down barrier spawns
-	spawn_lock = true	# stop spawning new barriers
-	get_tree().call_group("barriers", "remove")	# remove existing barriers
-	
-	# check for high score
-	if dodge_count > high_score:
-		high_score = dodge_count
-		$Results/NewBest.show()
-	else:
-		$Results/NewBest.hide()
-	
-	# show game results
-	game_results.show()
-	
-	# tween restart message
-	var restart_scale_tween = create_tween().set_loops()
-	restart_scale_tween.tween_property($Results/Restart, "rotation", deg_to_rad(-3), 1)
-	restart_scale_tween.tween_property($Results/Restart, "rotation", deg_to_rad(0), 1)
-	restart_scale_tween.tween_property($Results/Restart, "rotation", deg_to_rad(3), 1)
-	restart_scale_tween.tween_property($Results/Restart, "rotation", deg_to_rad(0), 1)
 
 func initialize_paddle():
 	player = player_paddle.instantiate()
@@ -145,14 +117,20 @@ func spawn_barrier():
 func _barrier_dodged() -> void:
 	# update dodge count
 	dodge_count += 1
-	$HUD/DodgeCount.text = str(dodge_count)
-	
+	dodge_count_label.text = str(dodge_count)
+
 	# play SFX
-	$DodgeSFX.play()
+	dodge_sfx.play()
 	
-	# speed up every 5 dodges
+	# after every 5 dodges...
 	if dodge_count % 5 == 0:
+		# bump barrier speed
 		barrier_speed += barrier_speed_increment
+		
+		# check speed limit
+		if barrier_speed > BARRIER_SPEED_MAX:
+			barrier_speed = BARRIER_SPEED_MAX
+		
 		change_border_colors()
 		camera_view.apply_shake()
 		
@@ -167,23 +145,77 @@ func _barrier_dodged() -> void:
 		
 		# tween shader aberration property
 		var aberration_tween = create_tween()
-		aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", 0.2, 0.25)
-		aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", 0, 0.25)
+		aberration_tween.tween_property(shader_rect, "material:shader_parameter/aberration", 0.2, 0.25)
+		aberration_tween.tween_property(shader_rect, "material:shader_parameter/aberration", 0, 0.25)
 		
 		# play SFX
-		$ShakeSFX.play()
+		shake_sfx.play()
 	
 	# shrink paddle at 50 dodges
 	if dodge_count == 50:
 		player.shrink()
 	
 	# RAINBOOOOOOOOOWS at 75 dodges
-	if dodge_count == 75:
+	if dodge_count == 100:
 		$RainbowTimer.start()
+	
+	# debug
+	#print(barrier_speed)
+
+func _game_ended():
+	# temporarily lock input
+	input_unlocked = false
+	
+	# stop timer(s)
+	$RainbowTimer.stop()
+	
+	# shake camera back into place
+	camera_view.apply_shake()
+	camera_view.rotation = 0
+	
+	# play SFX
+	$SFX/SplodeSFX.play()
+	
+	# swap music with volume fade out/in
+	bgm_wait.set("volume_db", -80)
+	bgm_wait.play()
+	
+	var volume_tween = create_tween()
+	volume_tween.parallel().tween_property(bgm_play, "volume_db", -80, 1.5)
+	volume_tween.parallel().tween_property(bgm_wait, "volume_db", 0, 1.5)
+	
+	# tween alpha of ready/dodge count text
+	var alpha_tween = create_tween()
+	alpha_tween.tween_property(dodge_count_label, "modulate:a", 1, SPAWN_DELAY)
+	
+	# shut down barrier spawns
+	spawn_lock = true	# stop spawning new barriers
+	get_tree().call_group("barriers", "remove")	# remove existing barriers
+	
+	# check for high score
+	if dodge_count > high_score:
+		high_score = dodge_count
+		$Results/NewBest.show()
+	else:
+		$Results/NewBest.hide()
+	
+	# show game results
+	game_results.show()
+	
+	# tween restart message
+	var restart_scale_tween = create_tween().set_loops()
+	restart_scale_tween.tween_property(results_restart_label, "rotation", deg_to_rad(-3), 1)
+	restart_scale_tween.tween_property(results_restart_label, "rotation", deg_to_rad(0), 1)
+	restart_scale_tween.tween_property(results_restart_label, "rotation", deg_to_rad(3), 1)
+	restart_scale_tween.tween_property(results_restart_label, "rotation", deg_to_rad(0), 1)
+	
+	# wait a bit until player can restart
+	await get_tree().create_timer(RESTART_DELAY).timeout
+	input_unlocked = true
 
 
 func change_border_colors() -> void:
-	var borders = $Borders.get_children()
+	var borders = border_nodes.get_children()
 	for border in borders:
 		border.color = Color(randf(), randf(), randf(), 1)
 

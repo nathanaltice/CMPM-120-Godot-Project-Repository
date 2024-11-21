@@ -1,37 +1,42 @@
 extends Node
 
-var color_bar : PackedScene
-const BAR_WIDTH : int = 24
+const COLOR_BAR_WIDTH : int = 24
+const SCENE_TRANSITION_TIME = 1.5
+
+var color_bar : PackedScene = preload("res://scenes/color_bar.tscn")
 var window_size : Vector2
 var input_unlocked := true
-const SCENE_TRANSITION_TIME = 1.5
+
+@onready var shader_rect = $ShaderLayer/ColorRect
+@onready var background_music = $BGM
 
 func _ready() -> void:
 	# get our dimensions
 	window_size = get_window().size
 	
 	# create row of color bars
-	color_bar = preload("res://scenes/color_bar.tscn")
 	create_color_bars()
 	
 	# tween shader aberration property
 	var aberration_tween = create_tween().set_loops()
-	aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", 0.2, 5)
-	aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", 0.02, 5)
-	aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", -0.2, 5)
-	aberration_tween.tween_property($ShaderLayer/ColorRect, "material:shader_parameter/aberration", 0.02, 5)
+	aberration_tween.tween_property(shader_rect, "material:shader_parameter/aberration", 0.2, 5)
+	aberration_tween.tween_property(shader_rect, "material:shader_parameter/aberration", 0.02, 5)
+	aberration_tween.tween_property(shader_rect, "material:shader_parameter/aberration", -0.2, 5)
+	aberration_tween.tween_property(shader_rect, "material:shader_parameter/aberration", 0.02, 5)
 
-	$BGM.play()
+	# play music
+	background_music.play()
 
-func _process(delta: float) -> void:
-	# handle player input
+
+func _process(_delta: float) -> void:
+	# monitor player input
 	if Input.is_action_just_pressed("menu_select") and input_unlocked:
 		scene_transition()
 
 
 func create_color_bars() -> void:
 	# calculate number of bars to draw based on window width
-	var num_bars = window_size.x / BAR_WIDTH
+	var num_bars = window_size.x / COLOR_BAR_WIDTH
 	
 	# note: drawing the bars could be done in one nested loop, but I've left two separate loops for clairty
 	# top bars
@@ -39,14 +44,14 @@ func create_color_bars() -> void:
 		var bar = color_bar.instantiate()
 		add_child(bar)
 		bar.add_to_group("colorbars")
-		bar.position = Vector2(i * BAR_WIDTH, 0 - bar.size.y / 2 - randi_range(0, bar.size.y / 2))
+		bar.position = Vector2(i * COLOR_BAR_WIDTH, 0 - bar.size.y / 2 - randi_range(0, bar.size.y / 2))
 		bar.start_yoyo_tween()
 	# bottom bars
 	for i in num_bars:
 		var bar = color_bar.instantiate()
 		add_child(bar)
 		bar.add_to_group("colorbars")
-		bar.position = Vector2(i * BAR_WIDTH, window_size.y - bar.size.y / 2 - randi_range(0, bar.size.y / 2))
+		bar.position = Vector2(i * COLOR_BAR_WIDTH, window_size.y - bar.size.y / 2 - randi_range(0, bar.size.y / 2))
 		bar.start_yoyo_tween()
 
 

@@ -190,7 +190,7 @@ autoplay = true
 
 [node name="RevSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_c3qsk")
-volume_db = -10.0
+volume_db = -12.0
 
 [node name="SwellSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_hx4on")

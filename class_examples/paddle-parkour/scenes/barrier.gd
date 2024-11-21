@@ -1,21 +1,18 @@
 extends Area2D
 
-
 var window_size : Vector2			# stores window size
 var barrier_size : Vector2			# stores barrier size
 var barrier_speed : int				# stores barrier speed
 var spawn_lock := false				# tracks whether to spawn new barrier
-var explosion_scene : PackedScene
+var explosion_scene : PackedScene = preload("res://scenes/paddle_explosion.tscn")
 
 @onready var barrier_rectangle = $ColorRect
+
 
 func _ready() -> void:
 	# get our dimensions
 	window_size = get_window().size
 	barrier_size = barrier_rectangle.get_size()
-	
-	# preload explosion particles
-	explosion_scene = preload("res://scenes/paddle_explosion.tscn")
 
 
 func _process(delta: float) -> void:
@@ -27,7 +24,7 @@ func _process(delta: float) -> void:
 		spawn_lock = true
 		get_parent().call_deferred("spawn_barrier")
 	
-	# check for left edge exit
+	# check for left edge exit (and remove barrier)
 	if position.x < -barrier_size.x:
 		Signalbus.barrier_dodged.emit()
 		queue_free()
@@ -45,19 +42,20 @@ func initialize_barrier(speed):
 
 
 # handle collision
-func _on_body_entered(body: Node2D) -> void:
-	Signalbus.player_death.emit()
+func _on_body_entered(_body: Node2D) -> void:
+	Signalbus.player_died.emit()
 	remove()
 
 
 func remove() -> void:
-	# instance particle explosion and set to paddle position
+	# instance particle explosion and set to paddle position/color
 	var explosion = explosion_scene.instantiate()
 	get_parent().add_child(explosion)
 	explosion.position = position
 	explosion.position.y += barrier_size.y / 2
+	explosion.color = barrier_rectangle.color
 	explosion.emitting = true
 	explosion.one_shot = true
-	explosion.color = $ColorRect.color
+	
 	# release node
 	queue_free()

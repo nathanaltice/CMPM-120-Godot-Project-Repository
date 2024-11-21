@@ -1,4 +1,4 @@
 extends Node
 
 signal barrier_dodged
-signal player_death
+signal player_died
