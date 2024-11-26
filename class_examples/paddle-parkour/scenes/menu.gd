@@ -10,6 +10,7 @@ var input_unlocked := true
 @onready var shader_rect = $ShaderLayer/ColorRect
 @onready var background_music = $BGM
 
+
 func _ready() -> void:
 	# get our dimensions
 	window_size = get_window().size
