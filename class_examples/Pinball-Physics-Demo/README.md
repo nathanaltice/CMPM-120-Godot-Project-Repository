@@ -55,7 +55,24 @@ In this demo, each object has the following effects from a physics material:
   - Don’t bounce the pinball
 
 
-
-
 ## Particle Systems
+
+This demo utilizes two types of particle systems: [CPUParticles2D](https://docs.godotengine.org/en/stable/classes/class_cpuparticles2d.html#class-cpuparticles2d) and [GPUParticles2D](https://docs.godotengine.org/en/stable/classes/class_gpuparticles2d.html#class-gpuparticles2d). Each particle system has strengths and weaknesses, as detailed below:
+
+- CPU Particles
+  - These are particles whose behaviors are calculated and controlled by the CPU.
+  - These particles are much easier to design and make particle animations.
+  - These are good for complex, overly customized particle animations
+  - These particles are good at lower quantities and begin to lag games at larger quantities.
+  - EX: a sprite sheet particle system such as a butterfly flapping its wings with a trail.
+  
+- GPU Particles
+  - These are particles whose behaviors are calculated and controlled by the GPU.
+  - These particles are a little harder to design and animate.
+  - These are good for animations where you’ll need a lot of particles
+  - EX: Fire in a burning house
+
+ In this demo, the bubble particles in the background are [CPUParticles2Ds](https://docs.godotengine.org/en/stable/classes/class_cpuparticles2d.html#class-cpuparticles2d), and the stars that spawn when the ball hits a bouncy surface are [GPUParticles2Ds](https://docs.godotengine.org/en/stable/classes/class_gpuparticles2d.html#class-gpuparticles2d).
+
+ One interesting thing about the star particle systems that spawn is that they are coded with a garbage collection feature. When a particle system is spawned, it will wait a certain amount of time and then destroy itself. As programmers, we have to delete these spawned objects ourselves. Otherwise, as the game goes on, there will be dozens of inactive particle systems littering our game, causing the game to lag the longer the player plays the game.
 
