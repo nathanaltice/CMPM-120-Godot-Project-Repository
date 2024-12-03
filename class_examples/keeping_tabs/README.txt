@@ -1,10 +1,3 @@
-features
-the interesting things in this project
-
-
-
-
-
 # Keeping Tabs Game
 
 This demo was made by Nicholas Nolasco and is a recreation of one of his early games.
