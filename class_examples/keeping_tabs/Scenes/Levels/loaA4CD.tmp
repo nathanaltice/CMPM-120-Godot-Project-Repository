@@ -1,0 +1,167 @@
+[gd_scene load_steps=10 format=3 uid="uid://dem51iiq8yix7"]
+
+[ext_resource type="Script" path="res://Scripts/loading_screen.gd" id="1_1siu2"]
+[ext_resource type="FontFile" uid="uid://c74rlbss0hl4e" path="res://Assets/Fonts/operius-regular.ttf" id="1_3giwc"]
+[ext_resource type="Texture2D" uid="uid://bu5hbomlnwvd5" path="res://Assets/Mouse Character/Mouse Guy - Walk 1.png" id="1_pfrkb"]
+[ext_resource type="Texture2D" uid="uid://p4rmykbpylri" path="res://Assets/loading screen/Scrolling Texture.png" id="2_oibut"]
+[ext_resource type="Texture2D" uid="uid://cievx2uxfqt0h" path="res://Assets/windows background.png" id="2_taw3y"]
+[ext_resource type="Texture2D" uid="uid://cd1bbv5b6ak5o" path="res://Assets/Mouse Character/Mouse Guy - Walk 2.png" id="2_y4ug7"]
+[ext_resource type="Texture2D" uid="uid://b426050h7innf" path="res://Assets/Mouse Character/Mouse Guy - Walk 3.png" id="3_ppy1c"]
+[ext_resource type="Texture2D" uid="uid://dm0myd3i1n0do" path="res://Assets/loading screen/loading bar outline.png" id="8_sculo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s05my"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_pfrkb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_y4ug7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ppy1c")
+}],
+"loop": true,
+"name": &"Loading Walk",
+"speed": 5.0
+}]
+
+[node name="Loading Screen" type="Node2D"]
+script = ExtResource("1_1siu2")
+metadata/_edit_horizontal_guides_ = [433.0, 1111.0, 924.0]
+metadata/_edit_vertical_guides_ = [2280.0, 280.0]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(10, 10)
+texture = ExtResource("2_taw3y")
+offset = Vector2(128, 72)
+flip_h = true
+
+[node name="Backgrounds" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Background" type="ColorRect" parent="Backgrounds"]
+layout_mode = 0
+offset_right = 2560.0
+offset_bottom = 1440.0
+color = Color(0.830335, 0.830335, 0.830335, 1)
+
+[node name="Highlight Area" type="ColorRect" parent="Backgrounds"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 1130.0
+offset_right = 2560.0
+offset_bottom = 1440.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.654232, 0.654232, 0.654232, 1)
+
+[node name="Labels" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Title Label" type="Label" parent="Labels"]
+layout_mode = 0
+offset_top = 74.0
+offset_right = 2559.0
+offset_bottom = 392.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_3giwc")
+theme_override_font_sizes/font_size = 100
+text = "Loading Screen Demo"
+horizontal_alignment = 1
+
+[node name="Tip Title" type="Label" parent="Labels"]
+layout_mode = 0
+offset_left = 279.0
+offset_top = 809.0
+offset_right = 1193.0
+offset_bottom = 924.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_3giwc")
+theme_override_font_sizes/font_size = 100
+text = "Tip:"
+
+[node name="Tip Text" type="Label" parent="Labels"]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 924.0
+offset_right = 2086.0
+offset_bottom = 1130.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_3giwc")
+theme_override_font_sizes/font_size = 60
+text = "test test
+test test"
+autowrap_mode = 2
+
+[node name="Loading Bar" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = 280.0
+offset_top = 1165.0
+offset_right = 2280.0
+offset_bottom = 1405.0
+
+[node name="Parallax2D" type="Parallax2D" parent="Loading Bar"]
+repeat_size = Vector2(160, 0)
+autoscroll = Vector2(100, 0)
+repeat_times = 12
+
+[node name="Sprite2D" type="Sprite2D" parent="Loading Bar/Parallax2D"]
+position = Vector2(375, 120)
+scale = Vector2(20, 20)
+texture = ExtResource("2_oibut")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(2200, 1031)
+scale = Vector2(20, 20)
+sprite_frames = SubResource("SpriteFrames_s05my")
+animation = &"Loading Walk"
+autoplay = "Loading Walk"
+
+[node name="Loading Bar Outline" type="Sprite2D" parent="."]
+position = Vector2(1280, 1285)
+scale = Vector2(20, 20)
+texture = ExtResource("8_sculo")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1089.0
+offset_top = 615.5
+offset_right = 1431.0
+offset_bottom = 784.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "Next Level!"
+
+[node name="Background" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_right = 2560.0
+offset_bottom = 1440.0
+color = Color(0.831373, 0.831373, 0.831373, 0)
+
+[connection signal="button_up" from="UI/Button" to="." method="_on_button_button_up"]

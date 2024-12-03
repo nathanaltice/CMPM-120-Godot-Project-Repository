@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://c8k7j7hr6jsa"]
+
+[ext_resource type="PackedScene" uid="uid://bw1qbgu6hii83" path="res://scenes/level.tscn" id="1_g4klj"]
+[ext_resource type="PackedScene" uid="uid://c1vra2pf6gv21" path="res://scenes/characters/paddle.tscn" id="2_k5xc5"]
+[ext_resource type="PackedScene" uid="uid://gvocuhdfhsbl" path="res://scenes/characters/pin_ball.tscn" id="3_l254l"]
+[ext_resource type="PackedScene" uid="uid://jl6j72nyl0m2" path="res://scenes/ball_teleporter.tscn" id="4_52qal"]
+[ext_resource type="PackedScene" uid="uid://dnvhg4x6tgplu" path="res://scenes/characters/bouncer.tscn" id="5_up7ip"]
+[ext_resource type="PackedScene" uid="uid://6xjx20irvv1g" path="res://scenes/characters/barrier.tscn" id="7_ta6h7"]
+
+[node name="Main Level" type="Node"]
+
+[node name="Level" parent="." instance=ExtResource("1_g4klj")]
+
+[node name="Pin Ball" parent="." instance=ExtResource("3_l254l")]
+position = Vector2(299, -30)
+gravity_scale = 0.9
+
+[node name="Paddles" type="Node" parent="."]
+
+[node name="Paddle" parent="Paddles" instance=ExtResource("2_k5xc5")]
+position = Vector2(150, 715)
+rotation = 0.0
+
+[node name="Paddle2" parent="Paddles" instance=ExtResource("2_k5xc5")]
+position = Vector2(450, 715)
+rotation = 0.0
+scale = Vector2(-1, 1)
+
+[node name="Teleporters" type="Node" parent="."]
+
+[node name="Ball Teleporter (Top)" parent="Teleporters" instance=ExtResource("4_52qal")]
+position = Vector2(300, -130)
+
+[node name="Ball Teleporter (Top)2" parent="Teleporters" instance=ExtResource("4_52qal")]
+position = Vector2(300, 990)
+rotation = 3.14159
+
+[node name="Bouncers" type="Node" parent="."]
+
+[node name="Bouncer" parent="Bouncers" instance=ExtResource("5_up7ip")]
+position = Vector2(300, 150)
+
+[node name="Bouncer2" parent="Bouncers" instance=ExtResource("5_up7ip")]
+position = Vector2(130, 325)
+rotation = 1.5708
+
+[node name="Bouncer3" parent="Bouncers" instance=ExtResource("5_up7ip")]
+position = Vector2(460, 325)
+rotation = 1.5708
+
+[node name="Barriers" type="Node" parent="."]
+
+[node name="Barrier" parent="Barriers" instance=ExtResource("7_ta6h7")]
+position = Vector2(130, 550)
+
+[node name="Barrier2" parent="Barriers" instance=ExtResource("7_ta6h7")]
+position = Vector2(470, 550)
+scale = Vector2(-1, 1)

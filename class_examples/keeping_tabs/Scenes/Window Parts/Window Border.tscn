@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=3 uid="uid://sd6noiq7qhd2"]
+
+[ext_resource type="Script" path="res://Scripts/WindowDrag.gd" id="1_tsbsw"]
+[ext_resource type="Texture2D" uid="uid://c2jnrcdtlsqa5" path="res://Assets/Window V2/Bottom.png" id="4_1yn4r"]
+[ext_resource type="Texture2D" uid="uid://5ev44hu4hicb" path="res://Assets/Window V2/Left.png" id="5_40sav"]
+[ext_resource type="Texture2D" uid="uid://b6ii45pd2bdvd" path="res://Assets/Window V2/Top.png" id="6_rd76m"]
+[ext_resource type="Texture2D" uid="uid://d32xmgy8nujh5" path="res://Assets/Window V2/Top Corner.png" id="7_r4sky"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e7wji"]
+size = Vector2(400, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qtagm"]
+size = Vector2(398, 278)
+
+[node name="Window Border" type="Area2D"]
+texture_filter = 1
+script = ExtResource("1_tsbsw")
+
+[node name="Floor Nodes" type="Node2D" parent="."]
+
+[node name="Border Sprites" type="Node2D" parent="."]
+scale = Vector2(10, 10)
+
+[node name="Bottom 1" type="Sprite2D" parent="Border Sprites"]
+texture_filter = 1
+position = Vector2(-4, 0)
+texture = ExtResource("4_1yn4r")
+offset = Vector2(0, 16)
+
+[node name="Bottom 2" type="Sprite2D" parent="Border Sprites"]
+texture_filter = 1
+position = Vector2(4, 0)
+texture = ExtResource("4_1yn4r")
+offset = Vector2(0, 16)
+
+[node name="Left" type="Sprite2D" parent="Border Sprites"]
+texture_filter = 1
+position = Vector2(-4, 0)
+texture = ExtResource("5_40sav")
+offset = Vector2(0, 16)
+
+[node name="Right" type="Sprite2D" parent="Border Sprites"]
+texture_filter = 1
+position = Vector2(4, 0)
+scale = Vector2(-1, 1)
+texture = ExtResource("5_40sav")
+offset = Vector2(0, 16)
+
+[node name="Top 1" type="Sprite2D" parent="Border Sprites"]
+texture_filter = 1
+position = Vector2(-4, 0)
+texture = ExtResource("6_rd76m")
+offset = Vector2(0, 16)
+
+[node name="Top 2" type="Sprite2D" parent="Border Sprites"]
+texture_filter = 1
+position = Vector2(4, 0)
+texture = ExtResource("7_r4sky")
+offset = Vector2(0, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_e7wji")
+
+[node name="Player Area2D" type="Area2D" parent="."]
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player Area2D"]
+position = Vector2(0, 180)
+shape = SubResource("RectangleShape2D_qtagm")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="body_entered" from="Player Area2D" to="." method="_on_player_enter_window"]
+[connection signal="body_exited" from="Player Area2D" to="." method="_on_player_exit_window"]

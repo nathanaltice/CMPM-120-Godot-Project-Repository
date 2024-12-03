@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://7n7ncak6rx1a"]
+
+[ext_resource type="Texture2D" uid="uid://b01k72wvwrwqw" path="res://sprites/level_sprites/Bubbles Sprite Sheet.png" id="1_51o3b"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bargn"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_ghjpk"]
+offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.498039, 1, 1, 1, 0.498039, 1, 1, 1, 0)
+metadata/_snap_enabled = true
+
+[node name="Bubbles PS" type="CPUParticles2D"]
+material = SubResource("CanvasItemMaterial_bargn")
+rotation = -1.5708
+lifetime = 3.0
+preprocess = 5.0
+texture = ExtResource("1_51o3b")
+emission_shape = 3
+emission_rect_extents = Vector2(1, 256)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 471.05
+color_ramp = SubResource("Gradient_ghjpk")
+anim_speed_min = 0.25
+anim_speed_max = 1.0

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://jl6j72nyl0m2"]
+
+[ext_resource type="Texture2D" uid="uid://v7b4ga3dtpbi" path="res://sprites/level_sprites/Pin Ball.png" id="1_f58yg"]
+[ext_resource type="Script" path="res://scripts/ball_teleporter.gd" id="1_y0kbk"]
+[ext_resource type="AudioStream" uid="uid://dmwqgrn5idgrd" path="res://audio/sfx/se2001__cartoon-quick-zip.wav" id="3_kjeuf"]
+
+[node name="Ball Teleporter" type="Node2D"]
+script = ExtResource("1_y0kbk")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-160, 0, -160, 128, -80, 128, -80, 64, 80, 64, 80, 128, 160, 128, 160, 0)
+
+[node name="Teleport Location" type="Node2D" parent="."]
+position = Vector2(0, 1022)
+
+[node name="Sprite2D" type="Sprite2D" parent="Teleport Location"]
+visible = false
+texture = ExtResource("1_f58yg")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_kjeuf")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

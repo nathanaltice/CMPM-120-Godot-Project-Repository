@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bw1qbgu6hii83"]
+
+[ext_resource type="Texture2D" uid="uid://cbs5h0k03hhv4" path="res://sprites/level_sprites/Background.png" id="1_qde50"]
+[ext_resource type="Texture2D" uid="uid://d4ui702xo3jp" path="res://sprites/level_sprites/Border.png" id="2_3swbq"]
+[ext_resource type="PhysicsMaterial" uid="uid://0sv3188e7k5y" path="res://physics_materials/walls_physics_material.tres" id="2_knerk"]
+[ext_resource type="PackedScene" uid="uid://7n7ncak6rx1a" path="res://scenes/bubbles_ps.tscn" id="4_enqnn"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = 1
+texture = ExtResource("1_qde50")
+centered = false
+
+[node name="Bubbles PS" parent="." instance=ExtResource("4_enqnn")]
+z_index = 2
+position = Vector2(300, 950)
+
+[node name="Border" type="StaticBody2D" parent="."]
+physics_material_override = ExtResource("2_knerk")
+
+[node name="Border" type="Sprite2D" parent="Border"]
+z_index = 3
+texture = ExtResource("2_3swbq")
+centered = false
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Border"]
+polygon = PackedVector2Array(-215, 860, 221, 860, 221, 842, 121, 762, 121, 687, 34, 637, 34, 18, 221, 18, 221, -145, -215, -145)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Border"]
+polygon = PackedVector2Array(746, 860, 380, 860, 380, 842, 479, 762, 479, 687, 566, 636, 566, 18, 380, 18, 380, -146, 745, -146)
