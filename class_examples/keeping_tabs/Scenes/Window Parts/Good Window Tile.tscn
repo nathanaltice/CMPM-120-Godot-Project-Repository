@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ltu1q87lybgk"]
 
-[ext_resource type="Script" path="res://Scenes/Window Parts/WindowTile.gd" id="1_btjiw"]
+[ext_resource type="Script" path="res://Scripts/WindowTile.gd" id="1_btjiw"]
 [ext_resource type="Texture2D" uid="uid://lyobqf3vwitn" path="res://Assets/Standing Tile.png" id="1_qxjdi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1l2o5"]

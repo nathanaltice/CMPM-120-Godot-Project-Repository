@@ -76,9 +76,8 @@ func _unload_level():
 			if(current_level.finished_loading_signal.is_connected(instantiate_loaded_level)):
 				current_level.finished_loading_signal.disconnect(instantiate_loaded_level)
 		
-		
-		
 		current_level.queue_free()
+		
 	current_level = null
 
 
