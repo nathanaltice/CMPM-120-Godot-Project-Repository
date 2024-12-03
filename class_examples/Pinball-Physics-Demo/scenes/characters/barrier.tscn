@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://6xjx20irvv1g"]
+
+[ext_resource type="Texture2D" uid="uid://doasfr25qgle8" path="res://sprites/level_sprites/Barrier.png" id="1_rpo4a"]
+[ext_resource type="Script" path="res://scripts/barrier.gd" id="1_uy0bt"]
+[ext_resource type="PhysicsMaterial" uid="uid://0sv3188e7k5y" path="res://physics_materials/walls_physics_material.tres" id="2_akls4"]
+[ext_resource type="PhysicsMaterial" uid="uid://y2apfc0vvrqy" path="res://physics_materials/bouncy_physics_material.tres" id="3_ww6jm"]
+[ext_resource type="AudioStream" uid="uid://cray42iebt24j" path="res://audio/sfx/el_boss__game-jump-sound-boing-1-of-2.wav" id="5_krtx4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qvjq6"]
+size = Vector2(144.521, 9.69172)
+
+[sub_resource type="Animation" id="Animation_nh7dp"]
+resource_name = "Bounce"
+length = 0.0667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mpyvu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fgvqq"]
+_data = {
+"Bounce": SubResource("Animation_nh7dp"),
+"RESET": SubResource("Animation_mpyvu")
+}
+
+[node name="Barrier" type="Node2D"]
+script = ExtResource("1_uy0bt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 5
+texture = ExtResource("1_rpo4a")
+
+[node name="Bouncy Static Body" type="StaticBody2D" parent="."]
+rotation = 1.14494
+physics_material_override = ExtResource("3_ww6jm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bouncy Static Body"]
+position = Vector2(-0.995187, -15.6775)
+shape = SubResource("RectangleShape2D_qvjq6")
+
+[node name="Hard Static Body" type="StaticBody2D" parent="."]
+rotation = 1.14494
+physics_material_override = ExtResource("2_akls4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hard Static Body"]
+polygon = PackedVector2Array(-83.4924, 17.03, 17.5935, 62.8846, 32.4931, 66.3491, 45.4775, 54.6699, 88.975, 9.61473, 91.1158, -4.78725, 84.4031, -16.6169, 72.5642, -21.9872, 72.0759, -11.228, -73.8313, -11.5298, -74.6668, -21.7915, -84.7595, -16.4871, -91.3692, -1.91616)
+
+[node name="Area2D" type="Area2D" parent="."]
+rotation = 1.14494
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.995189, -18.5799)
+shape = SubResource("RectangleShape2D_qvjq6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fgvqq")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_krtx4")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

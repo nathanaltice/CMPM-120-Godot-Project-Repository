@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://e40pnqvrohjt"]
+
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_hhogd"]
+[ext_resource type="Texture2D" uid="uid://cievx2uxfqt0h" path="res://Assets/windows background.png" id="1_ofwhj"]
+[ext_resource type="PackedScene" uid="uid://ltu1q87lybgk" path="res://Scenes/Window Parts/Good Window Tile.tscn" id="3_s87ot"]
+
+[node name="Global Level" type="Node2D"]
+script = ExtResource("1_hhogd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(10, 10)
+texture = ExtResource("1_ofwhj")
+offset = Vector2(128, 72)
+flip_h = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(0.45, 0.45)
+
+[node name="Border Tiles" type="Node" parent="."]
+
+[node name="Top Tile" parent="Border Tiles" instance=ExtResource("3_s87ot")]
+position = Vector2(1275, -42)
+scale = Vector2(325, 10)
+
+[node name="Left Tile" parent="Border Tiles" instance=ExtResource("3_s87ot")]
+position = Vector2(-42, 798)
+rotation = 1.5708
+scale = Vector2(200, 10)
+
+[node name="Right Tile" parent="Border Tiles" instance=ExtResource("3_s87ot")]
+position = Vector2(2602, 798)
+rotation = 1.5708
+scale = Vector2(200, 10)
+
+[node name="Bottom Tile" parent="Border Tiles" instance=ExtResource("3_s87ot")]
+position = Vector2(1275, 1650)
+scale = Vector2(800, 10)
+isGoodTile = false

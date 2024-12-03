@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://bwdy5owyyu0yq"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_oas4c"]
+[ext_resource type="Texture2D" uid="uid://bju1lpfmhie8r" path="res://Assets/Mouse Character/Mouse Character - Idle 1.png" id="2_6ha15"]
+[ext_resource type="Texture2D" uid="uid://bttu5uabl42f7" path="res://Assets/Mouse Character/Mouse Guy - Fall 1.png" id="2_bce8u"]
+[ext_resource type="Texture2D" uid="uid://dwc4qvw412kky" path="res://Assets/Mouse Character/Mouse Character - Idle 2.png" id="3_08j15"]
+[ext_resource type="Texture2D" uid="uid://cd1bbv5b6ak5o" path="res://Assets/Mouse Character/Mouse Guy - Walk 2.png" id="4_25lvx"]
+[ext_resource type="Texture2D" uid="uid://b426050h7innf" path="res://Assets/Mouse Character/Mouse Guy - Walk 3.png" id="5_60r5e"]
+[ext_resource type="Texture2D" uid="uid://bu5hbomlnwvd5" path="res://Assets/Mouse Character/Mouse Guy - Walk 1.png" id="6_nplbk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a2rxx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_bce8u")
+}],
+"loop": true,
+"name": &"Falling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": ExtResource("2_6ha15")
+}, {
+"duration": 2.0,
+"texture": ExtResource("3_08j15")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_25lvx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_60r5e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_25lvx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_nplbk")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hm3bk"]
+radius = 29.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_oas4c")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -40)
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_a2rxx")
+animation = &"Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -30)
+shape = SubResource("CircleShape2D_hm3bk")

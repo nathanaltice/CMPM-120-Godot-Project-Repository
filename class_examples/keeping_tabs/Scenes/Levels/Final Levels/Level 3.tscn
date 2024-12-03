@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxvvuwtikqyys"]
+
+[ext_resource type="Texture2D" uid="uid://cievx2uxfqt0h" path="res://Assets/windows background.png" id="1_dol8e"]
+[ext_resource type="PackedScene" uid="uid://cjrgjcp43q3b" path="res://Scenes/Characters/WinButton.tscn" id="2_05fsr"]
+[ext_resource type="PackedScene" uid="uid://bwdy5owyyu0yq" path="res://Scenes/Characters/Player.tscn" id="3_blksv"]
+[ext_resource type="PackedScene" uid="uid://sd6noiq7qhd2" path="res://Scenes/Window Parts/Window Border.tscn" id="4_lo1it"]
+[ext_resource type="PackedScene" uid="uid://bddawr7ysy5u3" path="res://Scenes/Characters/UI.tscn" id="6_gtmmo"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(10, 10)
+texture = ExtResource("1_dol8e")
+offset = Vector2(128, 72)
+flip_h = true
+
+[node name="Win Button" parent="." instance=ExtResource("2_05fsr")]
+position = Vector2(2185, 1239)
+
+[node name="Player" parent="." instance=ExtResource("3_blksv")]
+position = Vector2(350, 165)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(0.45, 0.45)
+
+[node name="Window Border" parent="." instance=ExtResource("4_lo1it")]
+position = Vector2(475, 215)
+
+[node name="Window Border2" parent="." instance=ExtResource("4_lo1it")]
+position = Vector2(870, 1000)
+
+[node name="Window Border3" parent="." instance=ExtResource("4_lo1it")]
+position = Vector2(1517, 501)
+
+[node name="Control" parent="." instance=ExtResource("6_gtmmo")]
+visible = false

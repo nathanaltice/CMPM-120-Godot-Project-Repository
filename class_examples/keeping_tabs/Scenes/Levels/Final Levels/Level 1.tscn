@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://b52qk5ergjcxt"]
+
+[ext_resource type="PackedScene" uid="uid://cjrgjcp43q3b" path="res://Scenes/Characters/WinButton.tscn" id="2_7e8ji"]
+[ext_resource type="PackedScene" uid="uid://bwdy5owyyu0yq" path="res://Scenes/Characters/Player.tscn" id="3_i5l4l"]
+[ext_resource type="PackedScene" uid="uid://sd6noiq7qhd2" path="res://Scenes/Window Parts/Window Border.tscn" id="4_1ao44"]
+[ext_resource type="PackedScene" uid="uid://bddawr7ysy5u3" path="res://Scenes/Characters/UI.tscn" id="5_y6ckn"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Win Button" parent="." instance=ExtResource("2_7e8ji")]
+position = Vector2(2185, 1239)
+
+[node name="Player" parent="." instance=ExtResource("3_i5l4l")]
+position = Vector2(580, 250)
+
+[node name="Window Border 1" parent="." instance=ExtResource("4_1ao44")]
+position = Vector2(750, 300)
+
+[node name="Window Border 2" parent="." instance=ExtResource("4_1ao44")]
+position = Vector2(450, 950)
+
+[node name="Window Border 3" parent="." instance=ExtResource("4_1ao44")]
+position = Vector2(2200, 400)
+
+[node name="Next Level Button" parent="." instance=ExtResource("5_y6ckn")]
+
+[connection signal="player_won_level" from="Win Button" to="Next Level Button" method="_on_player_won_level"]
+[connection signal="player_died" from="Player" to="Next Level Button" method="_on_player_died"]

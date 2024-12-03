@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://gvocuhdfhsbl"]
+
+[ext_resource type="Script" path="res://scripts/pin_ball.gd" id="1_o50vt"]
+[ext_resource type="PhysicsMaterial" uid="uid://bevde7maek1jx" path="res://physics_materials/ball_physics_material.tres" id="1_obawt"]
+[ext_resource type="Texture2D" uid="uid://v7b4ga3dtpbi" path="res://sprites/level_sprites/Pin Ball.png" id="1_qhmqv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kkjot"]
+radius = 23.0
+
+[node name="Pin Ball" type="RigidBody2D"]
+z_index = 6
+physics_material_override = ExtResource("1_obawt")
+script = ExtResource("1_o50vt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_qhmqv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kkjot")
