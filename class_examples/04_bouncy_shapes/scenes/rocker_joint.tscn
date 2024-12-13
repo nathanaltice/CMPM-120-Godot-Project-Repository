@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://803i8rlyt0vf"]
+
+[ext_resource type="Texture2D" uid="uid://dijdfoq6jjkuj" path="res://assets/png/icon_circle.png" id="1_l3h5g"]
+[ext_resource type="Script" path="res://scripts/rocker_joint.gd" id="1_ss7ar"]
+[ext_resource type="Texture2D" uid="uid://dqyuq0ggjlm2c" path="res://assets/png/curve.png" id="2_iqoaf"]
+[ext_resource type="AudioStream" uid="uid://dt7mr30u486mu" path="res://assets/wav/bell1.wav" id="4_v8ewf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qnthg"]
+
+[node name="RockerJoint" type="PinJoint2D"]
+position = Vector2(277, 161)
+node_a = NodePath("Pin")
+node_b = NodePath("Curve")
+script = ExtResource("1_ss7ar")
+
+[node name="Pin" type="StaticBody2D" parent="."]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pin"]
+shape = SubResource("CircleShape2D_qnthg")
+
+[node name="PinSprite" type="Sprite2D" parent="Pin"]
+scale = Vector2(0.21, 0.21)
+texture = ExtResource("1_l3h5g")
+
+[node name="Curve" type="RigidBody2D" parent="."]
+center_of_mass_mode = 1
+center_of_mass = Vector2(0, 90)
+contact_monitor = true
+max_contacts_reported = 2
+
+[node name="CurveSprite" type="Sprite2D" parent="Curve"]
+modulate = Color(1, 0.196078, 1, 1)
+rotation = -0.785398
+scale = Vector2(0.214628, 0.214628)
+texture = ExtResource("2_iqoaf")
+offset = Vector2(-200, 200)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Curve"]
+rotation = -0.785398
+polygon = PackedVector2Array(-78, -2, -70, 2, -68, 15, -65, 30, -59, 41, -47, 54, -34, 63, -14, 68, -3, 69, 2, 74, 2, 79, -1, 84, -5, 88, -22, 87, -41, 81, -61, 68, -77, 50, -84, 34, -88, 15, -87, 3)
+
+[node name="BellSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_v8ewf")
+attenuation = 3.24901
+
+[connection signal="body_entered" from="Curve" to="." method="_on_curve_body_entered"]

@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://cngpajdsly6wu"]
+
+[ext_resource type="Script" path="res://scripts/shape.gd" id="1_0x8pi"]
+[ext_resource type="Texture2D" uid="uid://ci0utyvo3gbcy" path="res://assets/png/shapes.png" id="2_gxcoe"]
+[ext_resource type="AudioStream" uid="uid://co1m7ds1x2jnm" path="res://assets/wav/pop.wav" id="3_pmlv2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8me5m"]
+radius = 39.0128
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hwf0c"]
+size = Vector2(76, 77)
+
+[node name="Shape" type="Node"]
+script = ExtResource("1_0x8pi")
+
+[node name="Circle" type="RigidBody2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="Circle"]
+scale = Vector2(0.417112, 0.417112)
+texture = ExtResource("2_gxcoe")
+region_enabled = true
+region_rect = Rect2(539, 14, 187, 187)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Circle"]
+shape = SubResource("CircleShape2D_8me5m")
+
+[node name="Square" type="RigidBody2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="Square"]
+scale = Vector2(0.417112, 0.417112)
+texture = ExtResource("2_gxcoe")
+region_enabled = true
+region_rect = Rect2(17, 14, 186, 186)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Square"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_hwf0c")
+
+[node name="Triangle" type="RigidBody2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="Triangle"]
+scale = Vector2(0.417112, 0.417112)
+texture = ExtResource("2_gxcoe")
+region_enabled = true
+region_rect = Rect2(269, 14, 216, 186)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Triangle"]
+polygon = PackedVector2Array(0, -39, 45, 39, -45, 39)
+
+[node name="PopSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_pmlv2")

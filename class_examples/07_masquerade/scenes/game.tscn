@@ -1,0 +1,111 @@
+[gd_scene load_steps=14 format=3 uid="uid://dvehxsw6y0wua"]
+
+[ext_resource type="Texture2D" uid="uid://bipysyfgfo1sc" path="res://assets/png/background.png" id="1_dxajr"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_lu1w7"]
+[ext_resource type="PackedScene" uid="uid://bnslb0n0sftk1" path="res://scenes/peek_scene.tscn" id="3_7x2mg"]
+[ext_resource type="PackedScene" uid="uid://bpoxvjjia4nfi" path="res://scenes/animated_mask.tscn" id="3_uf3ge"]
+[ext_resource type="Script" path="res://scripts/gradient_mask.gd" id="4_1ihdq"]
+[ext_resource type="Texture2D" uid="uid://v0trsteocuqk" path="res://assets/png/outlines.png" id="5_58ses"]
+[ext_resource type="Texture2D" uid="uid://iypakusgdfii" path="res://assets/png/gradient_shine.png" id="5_bxk7t"]
+[ext_resource type="Texture2D" uid="uid://m7vd8njia5xf" path="res://assets/jpg/x-ray.jpg" id="6_juyf8"]
+[ext_resource type="AudioStream" uid="uid://c36jfkjw0602l" path="res://assets/wav/rotate-sound.wav" id="8_sqshp"]
+[ext_resource type="Texture2D" uid="uid://bj7c8o6knx28u" path="res://assets/png/demo_shapes.png" id="9_sr1bh"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ntsch"]
+viewport_path = NodePath("SubViewportColor")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_wuodv"]
+viewport_path = NodePath("SubViewportOutline")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tlwa6"]
+viewport_path = NodePath("SubViewportMouse")
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_lu1w7")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_as_relative = false
+position = Vector2(348.25, 352.25)
+scale = Vector2(0.579583, 0.58625)
+texture = ExtResource("1_dxajr")
+
+[node name="SubViewportColor" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(700, 700)
+
+[node name="AnimatedMaskA" parent="SubViewportColor" instance=ExtResource("3_uf3ge")]
+position = Vector2(350, 350)
+scale = Vector2(0.6, 0.6)
+
+[node name="SubViewportOutline" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(700, 700)
+
+[node name="AnimatedMaskB" parent="SubViewportOutline" instance=ExtResource("3_uf3ge")]
+position = Vector2(350, 350)
+scale = Vector2(0.6, 0.6)
+
+[node name="SubViewportMouse" type="SubViewport" parent="."]
+transparent_bg = true
+audio_listener_enable_2d = true
+size = Vector2i(700, 700)
+
+[node name="MouseMask" parent="SubViewportMouse" instance=ExtResource("3_7x2mg")]
+
+[node name="ColorMask" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(352, 352)
+texture = SubResource("ViewportTexture_ntsch")
+
+[node name="DemoShapes" type="Sprite2D" parent="ColorMask"]
+position = Vector2(0, 224)
+texture = ExtResource("9_sr1bh")
+region_enabled = true
+region_rect = Rect2(1044, 337, 526, 159)
+
+[node name="DemoShapes2" type="Sprite2D" parent="ColorMask"]
+position = Vector2(-168, -144)
+texture = ExtResource("9_sr1bh")
+region_enabled = true
+region_rect = Rect2(697, 17, 295, 555)
+
+[node name="DemoShapes3" type="Sprite2D" parent="ColorMask"]
+position = Vector2(176, -72)
+texture = ExtResource("9_sr1bh")
+region_enabled = true
+region_rect = Rect2(566, 1086, 358, 343)
+
+[node name="OutlineMask" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(350, 350)
+texture = SubResource("ViewportTexture_wuodv")
+
+[node name="Outlines" type="Sprite2D" parent="OutlineMask"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_58ses")
+
+[node name="GradientMask" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(350, 350)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_58ses")
+script = ExtResource("4_1ihdq")
+
+[node name="GradientShine" type="Sprite2D" parent="GradientMask"]
+position = Vector2(-812, -12)
+scale = Vector2(2.78261, 2)
+texture = ExtResource("5_bxk7t")
+
+[node name="MouseMask" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(350, 350)
+texture = SubResource("ViewportTexture_tlwa6")
+
+[node name="X-ray" type="Sprite2D" parent="MouseMask"]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("6_juyf8")
+
+[node name="Rotate_SFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_sqshp")
+autoplay = true
+area_mask = 131073

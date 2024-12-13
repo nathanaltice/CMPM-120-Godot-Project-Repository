@@ -1,0 +1,168 @@
+[gd_scene load_steps=17 format=3 uid="uid://dvehxsw6y0wua"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_60148"]
+[ext_resource type="Texture2D" uid="uid://bipysyfgfo1sc" path="res://assets/png/background.png" id="1_dxajr"]
+[ext_resource type="Texture2D" uid="uid://235d3scel3dl" path="res://assets/png/shapes.png" id="2_6l55w"]
+[ext_resource type="PackedScene" uid="uid://c1sayb2g5yr5q" path="res://scenes/rope.tscn" id="4_w6flq"]
+[ext_resource type="Texture2D" uid="uid://dhglx6k62evpw" path="res://assets/png/infinite-loop.png" id="5_2d00b"]
+[ext_resource type="PackedScene" uid="uid://c5ehr5sv5di6b" path="res://scenes/draggable_instrument.tscn" id="6_3ro4k"]
+[ext_resource type="Texture2D" uid="uid://bij1e8nwrkep5" path="res://assets/png/sketch-star.png" id="7_r8miw"]
+[ext_resource type="Texture2D" uid="uid://opr3hao4obxd" path="res://assets/png/sketch-diamond.png" id="8_18m0i"]
+[ext_resource type="AudioStream" uid="uid://ju2sj566iv43" path="res://assets/wav/timpani-d.wav" id="8_w38lf"]
+[ext_resource type="Texture2D" uid="uid://ch7tuaidaauu5" path="res://assets/png/sketch-dot.png" id="8_x73mb"]
+[ext_resource type="AudioStream" uid="uid://dx3mehikyg8ky" path="res://assets/wav/timpani-b.wav" id="9_gre36"]
+[ext_resource type="AudioStream" uid="uid://uvkx8u3aosdb" path="res://assets/wav/taiko-low.wav" id="10_akx30"]
+[ext_resource type="AudioStream" uid="uid://c4xr3d30tp6p7" path="res://assets/wav/taiko-high.wav" id="12_68xkb"]
+[ext_resource type="Texture2D" uid="uid://smqgfpngumkc" path="res://assets/png/sketch-astrix.png" id="13_4s3ku"]
+
+[sub_resource type="Curve2D" id="Curve2D_nr6sa"]
+_data = {
+"points": PackedVector2Array(1.12876, -72.4545, -1.12876, 72.4545, -81, 538, -71.725, -3.54855, 71.725, 3.54855, 29, 663, -81.4816, -4.01387, 81.4816, 4.01387, 394, 415, -2.85826, -69.8661, 2.85826, 69.8661, 510, 538, 35.7235, 0.401387, -35.7235, -0.401387, 407, 664, 102.5, 105, -102.5, -105, 214, 543, 61.0109, 4.76837e-07, -61.0109, -4.76837e-07, 28, 417, -2.00694, -74.658, 2.00694, 74.658, -82, 538)
+}
+point_count = 8
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bu82p"]
+radius = 28.8434
+height = 69.9887
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_60148")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_as_relative = false
+position = Vector2(349, 348)
+scale = Vector2(0.585105, 0.585105)
+texture = ExtResource("1_dxajr")
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(144, -32)
+curve = SubResource("Curve2D_nr6sa")
+
+[node name="Infinite-loop" type="Sprite2D" parent="Path2D"]
+position = Vector2(211, 538)
+scale = Vector2(0.696629, 0.696629)
+texture = ExtResource("5_2d00b")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-81, 538)
+rotation = 0.990878
+rotates = false
+
+[node name="InstrumentTrigger" type="CharacterBody2D" parent="Path2D/PathFollow2D"]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/InstrumentTrigger"]
+rotation = -1.0088
+shape = SubResource("CapsuleShape2D_bu82p")
+
+[node name="Shapes" type="Sprite2D" parent="Path2D/PathFollow2D/InstrumentTrigger"]
+position = Vector2(0.836517, 0.547943)
+rotation = -1.0088
+scale = Vector2(0.255209, 0.250118)
+texture = ExtResource("2_6l55w")
+region_enabled = true
+region_rect = Rect2(56, 708, 226, 274)
+
+[node name="TempoSlider" type="HSlider" parent="."]
+offset_left = 293.0
+offset_top = 639.0
+offset_right = 400.0
+offset_bottom = 655.0
+min_value = 0.1
+max_value = 5.0
+step = 0.2
+value = 1.1
+
+[node name="Rope" parent="." instance=ExtResource("4_w6flq")]
+position = Vector2(351, 51)
+
+[node name="DrumBar" type="Node2D" parent="."]
+
+[node name="Timpani_Dot" parent="DrumBar" instance=ExtResource("6_3ro4k")]
+position = Vector2(136, 45)
+audio_file = ExtResource("9_gre36")
+instrument_texture = ExtResource("8_x73mb")
+
+[node name="Timpani_Star" parent="DrumBar" instance=ExtResource("6_3ro4k")]
+position = Vector2(226, 46)
+audio_file = ExtResource("8_w38lf")
+instrument_texture = ExtResource("7_r8miw")
+
+[node name="Taiko_Diamond" parent="DrumBar" instance=ExtResource("6_3ro4k")]
+position = Vector2(466, 45)
+audio_file = ExtResource("10_akx30")
+instrument_texture = ExtResource("8_18m0i")
+
+[node name="Taiko_Astrix" parent="DrumBar" instance=ExtResource("6_3ro4k")]
+position = Vector2(563, 45)
+audio_file = ExtResource("12_68xkb")
+instrument_texture = ExtResource("13_4s3ku")
+
+[node name="DrumBar2" type="Node2D" parent="."]
+position = Vector2(0, 62)
+
+[node name="Timpani_Dot" parent="DrumBar2" instance=ExtResource("6_3ro4k")]
+position = Vector2(136, 45)
+audio_file = ExtResource("9_gre36")
+instrument_texture = ExtResource("8_x73mb")
+
+[node name="Timpani_Star" parent="DrumBar2" instance=ExtResource("6_3ro4k")]
+position = Vector2(226, 46)
+audio_file = ExtResource("8_w38lf")
+instrument_texture = ExtResource("7_r8miw")
+
+[node name="Taiko_Diamond" parent="DrumBar2" instance=ExtResource("6_3ro4k")]
+position = Vector2(466, 45)
+audio_file = ExtResource("10_akx30")
+instrument_texture = ExtResource("8_18m0i")
+
+[node name="Taiko_Astrix" parent="DrumBar2" instance=ExtResource("6_3ro4k")]
+position = Vector2(563, 45)
+audio_file = ExtResource("12_68xkb")
+instrument_texture = ExtResource("13_4s3ku")
+
+[node name="DrumBar3" type="Node2D" parent="."]
+position = Vector2(0, 127)
+
+[node name="Timpani_Dot" parent="DrumBar3" instance=ExtResource("6_3ro4k")]
+position = Vector2(136, 45)
+audio_file = ExtResource("9_gre36")
+instrument_texture = ExtResource("8_x73mb")
+
+[node name="Timpani_Star" parent="DrumBar3" instance=ExtResource("6_3ro4k")]
+position = Vector2(226, 46)
+audio_file = ExtResource("8_w38lf")
+instrument_texture = ExtResource("7_r8miw")
+
+[node name="Taiko_Diamond" parent="DrumBar3" instance=ExtResource("6_3ro4k")]
+position = Vector2(466, 45)
+audio_file = ExtResource("10_akx30")
+instrument_texture = ExtResource("8_18m0i")
+
+[node name="Taiko_Astrix" parent="DrumBar3" instance=ExtResource("6_3ro4k")]
+position = Vector2(563, 45)
+audio_file = ExtResource("12_68xkb")
+instrument_texture = ExtResource("13_4s3ku")
+
+[node name="DrumBar4" type="Node2D" parent="."]
+position = Vector2(0, 198)
+
+[node name="Timpani_Dot" parent="DrumBar4" instance=ExtResource("6_3ro4k")]
+position = Vector2(136, 45)
+audio_file = ExtResource("9_gre36")
+instrument_texture = ExtResource("8_x73mb")
+
+[node name="Timpani_Star" parent="DrumBar4" instance=ExtResource("6_3ro4k")]
+position = Vector2(226, 46)
+audio_file = ExtResource("8_w38lf")
+instrument_texture = ExtResource("7_r8miw")
+
+[node name="Taiko_Diamond" parent="DrumBar4" instance=ExtResource("6_3ro4k")]
+position = Vector2(466, 45)
+audio_file = ExtResource("10_akx30")
+instrument_texture = ExtResource("8_18m0i")
+
+[node name="Taiko_Astrix" parent="DrumBar4" instance=ExtResource("6_3ro4k")]
+position = Vector2(563, 45)
+audio_file = ExtResource("12_68xkb")
+instrument_texture = ExtResource("13_4s3ku")

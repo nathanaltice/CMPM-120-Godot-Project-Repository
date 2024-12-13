@@ -1,0 +1,106 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqva5x4r63hvr"]
+
+[ext_resource type="Texture2D" uid="uid://bipysyfgfo1sc" path="res://assets/png/background.png" id="1_dxajr"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_vre8n"]
+[ext_resource type="Texture2D" uid="uid://tlvi4so7t58u" path="res://assets/png/demo_shapes.png" id="2_3sgdm"]
+[ext_resource type="Texture2D" uid="uid://bd3gog5rcf8os" path="res://assets/png/shutter.png" id="4_258bi"]
+
+[sub_resource type="Animation" id="Animation_dxpuw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Face:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_rtrck"]
+resource_name = "rotate_face"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Face:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_15jrf"]
+_data = {
+"RESET": SubResource("Animation_dxpuw"),
+"rotate_face": SubResource("Animation_rtrck")
+}
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_vre8n")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_as_relative = false
+position = Vector2(349, 350)
+scale = Vector2(0.57875, 0.580417)
+texture = ExtResource("1_dxajr")
+
+[node name="Face" type="Node2D" parent="."]
+position = Vector2(350, 350)
+scale = Vector2(0.75, 0.75)
+
+[node name="DemoShapes" type="Sprite2D" parent="Face"]
+position = Vector2(-11.5, -58.5)
+texture = ExtResource("2_3sgdm")
+region_enabled = true
+region_rect = Rect2(697, 17, 295, 555)
+
+[node name="DemoShapes3" type="Sprite2D" parent="Face"]
+position = Vector2(-179.5, -2.49997)
+texture = ExtResource("2_3sgdm")
+region_enabled = true
+region_rect = Rect2(986, 910, 121, 99)
+
+[node name="DemoShapes6" type="Sprite2D" parent="Face"]
+position = Vector2(160.5, -26.5)
+texture = ExtResource("2_3sgdm")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(986, 910, 121, 99)
+
+[node name="DemoShapes4" type="Sprite2D" parent="Face"]
+position = Vector2(12.5, 221.5)
+texture = ExtResource("2_3sgdm")
+region_enabled = true
+region_rect = Rect2(1157, 683, 155, 185)
+
+[node name="DemoShapes5" type="Sprite2D" parent="Face"]
+position = Vector2(4.49999, 133.5)
+texture = ExtResource("2_3sgdm")
+region_enabled = true
+region_rect = Rect2(74, 337, 171, 221)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_15jrf")
+}
+autoplay = "rotate_face"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(350, 350)
+
+[node name="ShutterButton" type="TextureButton" parent="."]
+offset_left = 596.0
+offset_top = 597.0
+offset_right = 647.0
+offset_bottom = 645.0
+texture_normal = ExtResource("4_258bi")
+texture_pressed = ExtResource("4_258bi")
+texture_hover = ExtResource("4_258bi")

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnslb0n0sftk1"]
+
+[ext_resource type="Script" path="res://scripts/mouse_mask.gd" id="1_g0erb"]
+[ext_resource type="Texture2D" uid="uid://c6tjhkhjrmuo" path="res://assets/png/peek.png" id="1_lhewd"]
+[ext_resource type="AudioStream" uid="uid://gpkqi6mn2qxh" path="res://assets/wav/xray-sound.wav" id="3_j7m7y"]
+
+[node name="PeekScene" type="Node2D"]
+script = ExtResource("1_g0erb")
+
+[node name="Peek_Zone_Clockwise" type="Sprite2D" parent="."]
+texture = ExtResource("1_lhewd")
+
+[node name="Peek_Zone_Counterclockwise" type="Sprite2D" parent="."]
+texture = ExtResource("1_lhewd")
+
+[node name="Peek_SFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_j7m7y")
+max_polyphony = 2

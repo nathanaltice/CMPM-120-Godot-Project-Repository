@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d36hcl51h8bqy"]
+
+[ext_resource type="Texture2D" uid="uid://bdm4a8w1uusiq" path="res://assets/png/godot-test.png" id="1_atr6i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_srow3"]
+radius = 50.2494
+
+[node name="Ball" type="RigidBody2D"]
+
+[node name="ball-sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_atr6i")
+region_enabled = true
+region_rect = Rect2(219.525, 43.3116, 102.597, 103.348)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_srow3")

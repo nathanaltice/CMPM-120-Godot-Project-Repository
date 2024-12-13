@@ -1,0 +1,9 @@
+[gd_resource type="CanvasTexture" load_steps=3 format=3 uid="uid://bftynpiva8wmv"]
+
+[ext_resource type="Texture2D" uid="uid://bipysyfgfo1sc" path="res://assets/png/background.png" id="1_k6oif"]
+[ext_resource type="Texture2D" uid="uid://dm0cs0l0ojxgd" path="res://assets/png/BackgroundNormalMap.png" id="2_dhkcd"]
+
+[resource]
+diffuse_texture = ExtResource("1_k6oif")
+normal_texture = ExtResource("2_dhkcd")
+specular_shininess = 0.0

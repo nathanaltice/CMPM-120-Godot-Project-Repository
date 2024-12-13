@@ -1,0 +1,169 @@
+[gd_scene load_steps=15 format=3 uid="uid://dvehxsw6y0wua"]
+
+[ext_resource type="Texture2D" uid="uid://bipysyfgfo1sc" path="res://assets/png/background.png" id="1_dxajr"]
+[ext_resource type="Script" path="res://scripts/character.gd" id="5_m26hh"]
+[ext_resource type="Texture2D" uid="uid://blqj0y01wweb6" path="res://assets/png/pointlight_texture.png" id="6_nry32"]
+[ext_resource type="PackedScene" uid="uid://cxmb5fwkk70fc" path="res://scenes/rocks.tscn" id="6_up5o5"]
+[ext_resource type="AudioStream" uid="uid://bjcuf4b1qg1vs" path="res://assets/wav/upbeat_looping.wav" id="7_6ooxk"]
+[ext_resource type="Texture2D" uid="uid://235d3scel3dl" path="res://assets/png/shapes.png" id="7_ij0ap"]
+[ext_resource type="Script" path="res://scripts/lantern.gd" id="7_oocek"]
+[ext_resource type="AudioStream" uid="uid://dkva663au61fw" path="res://assets/wav/fear_looping.wav" id="8_qln5m"]
+
+[sub_resource type="Shader" id="Shader_itfvr"]
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m1jb1"]
+shader = SubResource("Shader_itfvr")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ig1ow"]
+radius = 40.0
+height = 104.0
+
+[sub_resource type="Gradient" id="Gradient_tc1a1"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i6cxe"]
+gradient = SubResource("Gradient_tc1a1")
+fill = 1
+fill_from = Vector2(0.512821, 0.508547)
+fill_to = Vector2(0.831197, 0.848291)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_u1to2"]
+vertices = PackedVector2Array(2023.53, 311.922, 2265.23, 440.641, 2228.75, 439.883, 1757.15, 372.727, 1744.98, 357.25, 1740.22, 341.977, 1986.8, 315.609, 2386.25, 199.383, 2384.03, 783, 2311.33, 519.492, 2305.36, 481.297, 2024.23, 642.289, 2223.65, 585.273, 2242.16, 588.141, 2021.1, 662.633, 2199.86, 579.344, 2196.86, 453.508, 2298.04, 555.891, 2292.63, 455.469, 2182.04, 568.891, 2018, 621.523, 2018, 607.07, 284.797, 662.328, 301.797, 645.344, 816.508, 618.711, 837.109, 644.039, 270.758, 683.953, 2057.23, 276.289, 2385.53, 198.57, 2054.1, 296.633, 11.0078, 8.00781, 960.133, 9.60156, 956.188, 15.6562, 939.203, 32.6562, 367.492, 20.6719, 436.141, 89.8438, 943.523, 55.7188, 962.93, 86.5469, 433.273, 108.352, 1074.28, 14.0938, 1071.82, 9.78906, 1834.17, 11.0469, 953.117, 574.75, 1366.77, 542.344, 1382.62, 569.172, 952.359, 611.227, 1244.23, 783.953, 1249, 775.172, 2196.34, 26.2266, 2373.1, 169.57, 2381.54, 188.211, 2005.88, 208, 1495.74, 224.398, 1508.13, 187.227, 2167.65, 23.8438, 2184.33, 474.461, 1755.89, 401.742, 2272.71, 576.492, 804.859, 588.156, 297.477, 622.281, 1079.15, 31.1172, 2190.87, 500.141, 1519.98, 502.094, 1510.09, 483.953, 2051, 255.523, 2051, 241.07, 424.492, 59.2891, 1185, 366.656, 1185, 351.883, 1629.55, 360.227, 1635.35, 393.906, 819, 333.656, 819, 318.883, 1077.39, 332.797, 1080.06, 340.812, 1081.08, 369.531, 422, 344.344, 422, 359.117, 163.609, 345.203, 160.93, 337.18, 159.922, 308.469, 2220.91, 11.7031, 2386.96, 11.9766, 2386.39, 160.398, 1076.83, 53.1328, 1835.16, 14.2969, 1245.67, 751.359, 2012.84, 594.172, 2187.69, 528.648, 1369.16, 513.648, 939.492, 542.859, 807.727, 569.648, 2045.84, 228.172, 1154.46, 773.406, 1152, 784.031, 11.9766, 784.992, 1880.21, 29.0078, 2137.44, 11.5469, 1854.66, 33.7969, 427.344, 132.141, 2005.86, 584.398, 1082.91, 318.094, 800.461, 277.148, 158.094, 359.906, 440.539, 400.852, 1740.55, 430.07, 813.656, 545.859, 278.07, 591.453, 1069.28, 75.7891, 1480.75, 171.547, 1468.6, 169.117, 524.094, 392.906, 529.609, 378.203, 750.711, 370.227, 1096.37, 400.102, 808.602, 351.859, 432.398, 326.141, 144.633, 277.898, 1485.45, 534.672, 1488.14, 531.594, 1494.41, 533.68, 1477, 556.469, 348.141, 141.133, 371.172, 137.141, 375.203, 137.859, 376.648, 144.32, 322.461, 147.672, 892.859, 536.867, 869.828, 540.859, 865.789, 540.133, 864.352, 533.688, 918.539, 530.328, 2194.86, 523.172, 2194.13, 527.203, 1166.46, 310.148, 1641.94, 337.922, 1383.71, 477.844, 1174.6, 384.859, 1648.05, 422.758, 2038.86, 218.398, 2197.35, 510.906, 1891.12, 11.1406, 1490.02, 177.344, 1452, 167.047, 1423.25, 164.844, 1403.51, 173.602, 1378.7, 181.156, 1359.2, 200.656, 1363.99, 226.211, 1051.02, 86.2188, 937.531, 638.633, 1413.5, 588.609, 416.891, 149.961, 991.258, 101.891, 488.641, 413, 824.109, 528.039, 249.742, 576.109, 472.141, 413, 403.891, 33.9609, 1223.43, 719.102, 1953.8, 681.609, 1651.88, 327.977, 1173.54, 751.781, 1987.66, 574, 1972.88, 574, 1931.15, 592.539, 1919, 624.141, 1919, 640.641, 1939.09, 676.094, 1469.38, 581.859, 1492.75, 466.609, 442.172, 319.156, 1990.53, 677.922, 1185.18, 739.773, 358.906, 134.641, 882.078, 543.352, 1477, 543.891, 1035.74, 90.9766, 1020.27, 103.148, 1164.83, 391.844, 1669.66, 436.797, 1686.66, 453.797, 1194.43, 731.531, 1447.85, 593.352, 798.828, 358.844, 1478.37, 454.617, 1709.72, 449.477, 1118.36, 298, 768.859, 265, 122.641, 380, 220.727, 574.852, 2020.66, 208, 1116.71, 403.227, 1413.86, 453.492, 1668.09, 318.719, 1134.86, 298, 455.07, 314, 1151.93, 397, 873.508, 657.328, 241.906, 696.648, 785.93, 364, 205.25, 587.008, 189.977, 591.781, 911.703, 651.359, 329.297, 26.6406, 303.469, 39.3672, 288.641, 66.7734, 287.883, 103.25, 76.1719, 286.156, 301.508, 135.141, 89.0703, 281, 1204.78, 727.539, 208.227, 702.453, 1964.15, 226.539, 1685.12, 313.852, 1441.22, 252, 1386.7, 240.094, 1961.81, 678.93, 185.922, 690.062, 175.977, 680.117, 166.719, 663.906, 161.852, 646.883, 164.172, 624.867, 106.141, 380, 171.719, 602.211, 74.5391, 367.852, 771.469, 364, 490.289, 307.773, 469.531, 314, 124.289, 274.773, 103.531, 281, 1137.47, 397, 1446.18, 448.867, 1456.91, 244.672, 1478.74, 241.398, 1994.81, 312.93, 1972.09, 310.094, 1952, 274.641, 1729.79, 323.719, 1952, 258.141, 1707.13, 316.172, 715.078, 336.531, 526.93, 370.18, 525.922, 341.469, 711.391, 299.797, 714.062, 307.812, 1411.23, 248.617, 752.359, 265, 730.367, 367.102, 510.633, 310.898, 716.906, 285.094, 56, 326.117, 56, 311.344, 66.3984, 293.141, 1425.86, 252)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5, 6), PackedInt32Array(7, 8, 9, 10), PackedInt32Array(11, 12, 13, 8, 14), PackedInt32Array(15, 12, 11), PackedInt32Array(3, 2, 16), PackedInt32Array(17, 9, 8), PackedInt32Array(7, 10, 18), PackedInt32Array(19, 15, 11, 20, 21), PackedInt32Array(22, 23, 24, 25, 26), PackedInt32Array(27, 28, 7, 18, 1, 29), PackedInt32Array(30, 31, 32, 33, 34), PackedInt32Array(35, 36, 37, 38), PackedInt32Array(39, 40, 41), PackedInt32Array(42, 43, 44, 45), PackedInt32Array(8, 46, 47), PackedInt32Array(48, 49, 50, 51, 52, 53, 54), PackedInt32Array(3, 16, 55, 56), PackedInt32Array(57, 17, 8), PackedInt32Array(58, 24, 23, 59), PackedInt32Array(60, 39, 41), PackedInt32Array(55, 61, 62, 63), PackedInt32Array(50, 28, 27, 64, 65), PackedInt32Array(33, 36, 35, 66), PackedInt32Array(67, 68, 69, 70), PackedInt32Array(71, 72, 73, 74, 75), PackedInt32Array(76, 77, 78, 79, 80), PackedInt32Array(81, 82, 83, 49, 48), PackedInt32Array(13, 57, 8), PackedInt32Array(84, 60, 41, 85), PackedInt32Array(8, 47, 86), PackedInt32Array(19, 21, 87, 88), PackedInt32Array(89, 43, 42, 90), PackedInt32Array(91, 58, 59), PackedInt32Array(50, 65, 92), PackedInt32Array(93, 94, 95), PackedInt32Array(96, 97, 54, 53, 98), PackedInt32Array(99, 38, 37), PackedInt32Array(88, 87, 100), PackedInt32Array(101, 73, 72, 102), PackedInt32Array(103, 78, 77, 104), PackedInt32Array(105, 56, 55), PackedInt32Array(106, 91, 59, 107), PackedInt32Array(108, 84, 85, 109, 110), PackedInt32Array(111, 112, 113, 75, 114), PackedInt32Array(115, 71, 75), PackedInt32Array(116, 76, 80, 117), PackedInt32Array(118, 119, 120, 121), PackedInt32Array(122, 123, 124, 125, 126), PackedInt32Array(127, 128, 129, 130, 131), PackedInt32Array(62, 132, 133, 88, 120), PackedInt32Array(69, 68, 134, 135), PackedInt32Array(136, 89, 90, 131), PackedInt32Array(137, 67, 70, 138), PackedInt32Array(50, 92, 139), PackedInt32Array(0, 29, 1), PackedInt32Array(62, 61, 140, 132), PackedInt32Array(96, 141, 97), PackedInt32Array(85, 98, 53, 142, 109), PackedInt32Array(108, 110, 143), PackedInt32Array(108, 143, 144), PackedInt32Array(108, 144, 145, 146), PackedInt32Array(108, 146, 147), PackedInt32Array(108, 147, 148, 149), PackedInt32Array(150, 45, 44, 151), PackedInt32Array(152, 99, 37, 153), PackedInt32Array(154, 155, 106, 107, 156, 157), PackedInt32Array(33, 66, 158), PackedInt32Array(8, 86, 159, 160), PackedInt32Array(161, 135, 134), PackedInt32Array(162, 93, 95), PackedInt32Array(88, 100, 163), PackedInt32Array(120, 88, 163, 164), PackedInt32Array(120, 164, 165), PackedInt32Array(120, 165, 166), PackedInt32Array(120, 166, 167), PackedInt32Array(121, 120, 167, 168, 169), PackedInt32Array(55, 63, 170), PackedInt32Array(171, 116, 117), PackedInt32Array(172, 14, 8), PackedInt32Array(173, 162, 95), PackedInt32Array(122, 174, 123), PackedInt32Array(127, 175, 128), PackedInt32Array(121, 176, 118), PackedInt32Array(177, 149, 148, 178), PackedInt32Array(179, 137, 138, 180, 181), PackedInt32Array(182, 173, 95), PackedInt32Array(159, 183, 169, 168, 160), PackedInt32Array(184, 115, 75), PackedInt32Array(55, 170, 185, 181), PackedInt32Array(186, 105, 55), PackedInt32Array(187, 101, 102, 188), PackedInt32Array(189, 103, 104, 157, 156, 190), PackedInt32Array(50, 139, 191), PackedInt32Array(155, 154, 111, 114, 192, 193, 136, 131, 130), PackedInt32Array(194, 161, 134, 195), PackedInt32Array(196, 171, 117), PackedInt32Array(197, 179, 181), PackedInt32Array(26, 25, 198, 199), PackedInt32Array(200, 184, 75), PackedInt32Array(190, 201, 202, 189), PackedInt32Array(159, 203, 150, 151, 183), PackedInt32Array(33, 158, 34), PackedInt32Array(30, 34, 204), PackedInt32Array(30, 204, 205), PackedInt32Array(30, 205, 206), PackedInt32Array(30, 206, 207), PackedInt32Array(208, 30, 207, 209, 210), PackedInt32Array(199, 198, 159, 211, 182, 95, 212), PackedInt32Array(51, 213, 214, 194, 195, 215), PackedInt32Array(152, 153, 178, 148, 216), PackedInt32Array(217, 172, 8, 160), PackedInt32Array(198, 203, 159), PackedInt32Array(218, 212, 95), PackedInt32Array(219, 218, 95), PackedInt32Array(220, 219, 95), PackedInt32Array(221, 220, 95), PackedInt32Array(222, 221, 95), PackedInt32Array(223, 224, 222, 95, 225), PackedInt32Array(113, 226, 200, 75), PackedInt32Array(227, 228, 196, 117), PackedInt32Array(229, 230, 210, 209), PackedInt32Array(192, 231, 197, 181, 232), PackedInt32Array(215, 233, 234, 51), PackedInt32Array(6, 235, 0), PackedInt32Array(236, 6, 5), PackedInt32Array(237, 236, 5, 238), PackedInt32Array(239, 237, 238), PackedInt32Array(213, 239, 238, 240), PackedInt32Array(213, 240, 214), PackedInt32Array(241, 112, 242, 243, 244, 245), PackedInt32Array(152, 216, 246, 188, 247, 126), PackedInt32Array(181, 186, 55), PackedInt32Array(126, 125, 152), PackedInt32Array(248, 113, 112), PackedInt32Array(241, 248, 112), PackedInt32Array(244, 243, 249, 250), PackedInt32Array(247, 250, 249, 227), PackedInt32Array(247, 227, 117, 126), PackedInt32Array(181, 185, 232), PackedInt32Array(192, 232, 193), PackedInt32Array(189, 202, 224, 223), PackedInt32Array(251, 225, 95), PackedInt32Array(251, 95, 30, 252), PackedInt32Array(253, 252, 30), PackedInt32Array(208, 253, 30), PackedInt32Array(117, 229, 209, 126), PackedInt32Array(195, 187, 188, 246, 254), PackedInt32Array(195, 254, 215), PackedInt32Array(51, 234, 52), PackedInt32Array(51, 50, 191)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(2, 795, 2394, 793, 2397, 2, 1, -2)])
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Background1" type="Sprite2D" parent="Background"]
+z_as_relative = false
+position = Vector2(400, 400)
+scale = Vector2(0.665833, 0.665833)
+texture = ExtResource("1_dxajr")
+
+[node name="Background2" type="Sprite2D" parent="Background"]
+z_as_relative = false
+position = Vector2(1199, 400)
+scale = Vector2(0.665833, 0.665833)
+texture = ExtResource("1_dxajr")
+
+[node name="Background3" type="Sprite2D" parent="Background"]
+z_as_relative = false
+position = Vector2(1998, 400)
+scale = Vector2(0.665833, 0.665833)
+texture = ExtResource("1_dxajr")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+color = Color(0.979634, 0.924212, 0.871883, 1)
+energy = 0.98
+blend_mode = 1
+
+[node name="Character" type="CharacterBody2D" parent="."]
+position = Vector2(258, 455)
+slide_on_ceiling = false
+script = ExtResource("5_m26hh")
+
+[node name="Lantern" type="PointLight2D" parent="Character"]
+material = SubResource("ShaderMaterial_m1jb1")
+scale = Vector2(0.755158, 0.787186)
+color = Color(0.971447, 0.858195, 0.545226, 1)
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("6_nry32")
+texture_scale = 2.0
+script = ExtResource("7_oocek")
+
+[node name="Sprite2D" type="Sprite2D" parent="Character"]
+position = Vector2(0, -57)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_ij0ap")
+region_enabled = true
+region_rect = Rect2(111, 30, 171, 221)
+
+[node name="Camera2D" type="Camera2D" parent="Character"]
+limit_left = 0
+limit_top = 0
+limit_right = 2400
+limit_bottom = 800
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Character"]
+simplify_path = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
+position = Vector2(0, -56)
+shape = SubResource("CapsuleShape2D_ig1ow")
+
+[node name="Party" type="Node2D" parent="."]
+
+[node name="UpbeatNoise" type="AudioStreamPlayer2D" parent="Party"]
+position = Vector2(1120, 537)
+stream = ExtResource("7_6ooxk")
+autoplay = true
+max_distance = 500.0
+max_polyphony = 2
+
+[node name="GreenLight" type="PointLight2D" parent="Party"]
+position = Vector2(1192, 488)
+scale = Vector2(2.5, 2.5)
+color = Color(0.312115, 0.817449, 0.680709, 1)
+texture = SubResource("GradientTexture2D_i6cxe")
+
+[node name="YellowLight" type="PointLight2D" parent="Party"]
+position = Vector2(976, 464)
+scale = Vector2(2.5, 2.5)
+color = Color(0.741407, 0.748438, 0.182936, 1)
+texture = SubResource("GradientTexture2D_i6cxe")
+
+[node name="PinkLight" type="PointLight2D" parent="Party"]
+position = Vector2(1056, 552)
+rotation = -0.124355
+scale = Vector2(2.5, 2.5)
+color = Color(1, 0.477818, 0.991843, 1)
+texture = SubResource("GradientTexture2D_i6cxe")
+
+[node name="Scary Noises" type="Node" parent="."]
+
+[node name="FearNoise" type="AudioStreamPlayer2D" parent="Scary Noises"]
+position = Vector2(80, 568)
+stream = ExtResource("8_qln5m")
+autoplay = true
+max_distance = 1000.0
+max_polyphony = 2
+
+[node name="FearNoise2" type="AudioStreamPlayer2D" parent="Scary Noises"]
+position = Vector2(1963, 544)
+stream = ExtResource("8_qln5m")
+autoplay = true
+max_distance = 1000.0
+max_polyphony = 2
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(1, 0)
+navigation_polygon = SubResource("NavigationPolygon_u1to2")
+
+[node name="Rocks1" parent="NavigationRegion2D" instance=ExtResource("6_up5o5")]
+position = Vector2(101, 207)
+
+[node name="Rocks2" parent="NavigationRegion2D" instance=ExtResource("6_up5o5")]
+position = Vector2(1140, 471)
+rotation = -3.14159
+
+[node name="Rocks3" parent="NavigationRegion2D" instance=ExtResource("6_up5o5")]
+position = Vector2(2125, 253)
+rotation = 1.5708

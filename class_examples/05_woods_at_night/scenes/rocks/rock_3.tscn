@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://diq81qwylo7f6"]
+
+[ext_resource type="Texture2D" uid="uid://d4ip6srh8hysw" path="res://assets/png/rockshapes.png" id="1_t83if"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_vvl0i"]
+resource_local_to_scene = true
+polygon = PackedVector2Array(-7, 34, 1, 44, 14, 41, 27, 29, 37, 18, 47, 3, 53, -9, 41, -24, 32, -34, 15, -39, 1, -45, -16, -41, -32, -40, -49, -28, -46, -11, -40, 0, -14, -7, -4, 7, -9, 25)
+
+[node name="Rock3" type="Node2D"]
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_vvl0i")
+
+[node name="Rockshapes" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_t83if")
+region_enabled = true
+region_rect = Rect2(722, 651, 210, 187)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-7, 34, 1, 44, 14, 41, 27, 29, 37, 18, 47, 3, 53, -9, 41, -24, 32, -34, 15, -39, 1, -45, -16, -41, -32, -40, -49, -28, -46, -11, -40, 0, -14, -7, -4, 7, -9, 25)

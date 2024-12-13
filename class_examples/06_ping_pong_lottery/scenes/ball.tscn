@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://dr8ch2dx6bwgv"]
+
+[ext_resource type="Script" path="res://scripts/ball.gd" id="1_qxuf2"]
+[ext_resource type="AudioStream" uid="uid://bls4fovcdd8g5" path="res://assets/wav/ping-pong-tap.wav" id="2_gig2e"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6xg4s"]
+friction = 0.0
+rough = true
+bounce = 0.6
+
+[sub_resource type="SphereMesh" id="SphereMesh_usqhw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4twe4"]
+radius = 0.51
+
+[node name="Ball" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20483, 0.506283, 0.0134123)
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_6xg4s")
+contact_monitor = true
+max_contacts_reported = 6
+script = ExtResource("1_qxuf2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+mesh = SubResource("SphereMesh_usqhw")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+shape = SubResource("SphereShape3D_4twe4")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_gig2e")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+visible = false
+light_color = Color(1, 0, 1, 1)
+light_indirect_energy = 1.975
+light_size = 0.1
+omni_range = 3.621
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

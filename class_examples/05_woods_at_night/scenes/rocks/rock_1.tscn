@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dju2ym76cr603"]
+
+[ext_resource type="Texture2D" uid="uid://d4ip6srh8hysw" path="res://assets/png/rockshapes.png" id="1_5ay3r"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_vvl0i"]
+polygon = PackedVector2Array(-27, 32, -1, 42, 11, 42, 41, 25, 44, 17, 42, 11, 41, -17, 29, -41, 16, -43, -4, -37, -18, -37, -28, -33, -35, -28, -43, -14, -43, -4)
+
+[node name="Rock1" type="Node2D"]
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_vvl0i")
+
+[node name="Rockshapes" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_5ay3r")
+region_enabled = true
+region_rect = Rect2(46, 119, 183, 178)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-27, 32, -1, 42, 11, 42, 41, 25, 44, 17, 42, 11, 41, -17, 29, -41, 16, -43, -4, -37, -18, -37, -28, -33, -35, -28, -43, -14, -43, -4)

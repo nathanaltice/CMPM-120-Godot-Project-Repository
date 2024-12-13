@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5ehr5sv5di6b"]
+
+[ext_resource type="Script" path="res://scripts/draggable_instrument.gd" id="1_hi2va"]
+[ext_resource type="Texture2D" uid="uid://bij1e8nwrkep5" path="res://assets/png/sketch-star.png" id="2_cnj6h"]
+[ext_resource type="AudioStream" uid="uid://dx3mehikyg8ky" path="res://assets/wav/timpani-b.wav" id="3_helk2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c0d6g"]
+radius = 14.0
+
+[node name="DraggableInstrument" type="StaticBody2D"]
+position = Vector2(96, 600)
+collision_layer = 2
+collision_mask = 2
+input_pickable = true
+script = ExtResource("1_hi2va")
+
+[node name="InstrumentArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+priority = 1
+
+[node name="InstrumentCollision" type="CollisionShape2D" parent="InstrumentArea"]
+shape = SubResource("CircleShape2D_c0d6g")
+
+[node name="DragCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c0d6g")
+
+[node name="InstrumentSprite" type="Sprite2D" parent="."]
+position = Vector2(1, 2)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_cnj6h")
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_helk2")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

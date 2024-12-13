@@ -1,0 +1,34 @@
+[gd_scene load_steps=9 format=3 uid="uid://dvehxsw6y0wua"]
+
+[ext_resource type="Texture2D" uid="uid://bipysyfgfo1sc" path="res://assets/png/background.png" id="1_dxajr"]
+[ext_resource type="PackedScene" uid="uid://cg7x13ulkxfiu" path="res://scenes/wheel_controller.tscn" id="2_v6uqh"]
+[ext_resource type="PackedScene" uid="uid://crikllwsq04y4" path="res://assets/blend/wheel.blend" id="3_dfccm"]
+[ext_resource type="AudioStream" uid="uid://dj6j1hnfu4ekt" path="res://assets/wav/bubble-pop.wav" id="4_8cdjq"]
+[ext_resource type="PackedScene" uid="uid://dx3w7xg36ft52" path="res://assets/blend/wheel2.blend" id="4_pw6bn"]
+[ext_resource type="PackedScene" uid="uid://bjejd3lqm64u7" path="res://assets/blend/wheel3.blend" id="5_upcj5"]
+[ext_resource type="AudioStream" uid="uid://dmweefqy6nfk1" path="res://assets/wav/flat-tap.wav" id="6_ltnlt"]
+[ext_resource type="AudioStream" uid="uid://kpq0q8t5ep13" path="res://assets/wav/low-hit.wav" id="8_g485g"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(350.75, 350.75)
+scale = Vector2(0.58375, 0.58375)
+texture = ExtResource("1_dxajr")
+
+[node name="Wheels" type="Node" parent="."]
+
+[node name="WheelController" parent="Wheels" instance=ExtResource("2_v6uqh")]
+position = Vector2(1, 27)
+wheel_model = ExtResource("3_dfccm")
+ball_sound = ExtResource("4_8cdjq")
+
+[node name="WheelController2" parent="Wheels" instance=ExtResource("2_v6uqh")]
+position = Vector2(339, 28)
+wheel_model = ExtResource("4_pw6bn")
+ball_sound = ExtResource("8_g485g")
+
+[node name="WheelController3" parent="Wheels" instance=ExtResource("2_v6uqh")]
+position = Vector2(170, 330)
+wheel_model = ExtResource("5_upcj5")
+ball_sound = ExtResource("6_ltnlt")

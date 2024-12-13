@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://uil7f531ekpd"]
+
+[ext_resource type="Texture2D" uid="uid://235d3scel3dl" path="res://assets/png/shapes.png" id="1_r74dq"]
+[ext_resource type="Script" path="res://scripts/rope_segment.gd" id="1_w0si1"]
+[ext_resource type="AudioStream" uid="uid://cs1ijl5aq2jk" path="res://assets/wav/chime.wav" id="3_es5oo"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g54l1"]
+height = 50.0
+
+[node name="RopeSegment" type="RigidBody2D"]
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_w0si1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_g54l1")
+
+[node name="SpriteShape" type="Sprite2D" parent="."]
+position = Vector2(3.05176e-05, -3.05176e-05)
+rotation = -0.0698132
+scale = Vector2(0.154135, 0.154135)
+texture = ExtResource("1_r74dq")
+region_enabled = true
+region_rect = Rect2(368, 400, 133, 326)
+
+[node name="BaseAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_es5oo")
+bus = &"Chimes"
+
+[node name="FlashTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]

@@ -1,0 +1,79 @@
+[gd_scene load_steps=10 format=3 uid="uid://cg7x13ulkxfiu"]
+
+[ext_resource type="Script" path="res://scripts/wheel_controller.gd" id="1_a8e1p"]
+[ext_resource type="PackedScene" uid="uid://ctaebkyfu7ikr" path="res://scenes/wheel.tscn" id="1_f3lpf"]
+[ext_resource type="Texture2D" uid="uid://ds3eixs7lujgg" path="res://assets/png/grabber.png" id="2_b4hj6"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tjndv"]
+viewport_path = NodePath("Wheel")
+
+[sub_resource type="Environment" id="Environment_w8ce4"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 0.737255, 1)
+ambient_light_energy = 0.05
+
+[sub_resource type="World3D" id="World3D_0flqt"]
+environment = SubResource("Environment_w8ce4")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsup6"]
+resource_name = "StyleBoxBright"
+content_margin_top = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0.905882, 0.290196, 0.54902, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 10
+shadow_color = Color(0, 0, 0, 0.247059)
+shadow_size = 5
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oamnl"]
+resource_name = "StyleBoxFaded"
+content_margin_top = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0.557795, 0.0981933, 0.311361, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 10
+shadow_color = Color(0, 0, 0, 0.247059)
+shadow_size = 5
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="Theme" id="Theme_rqkg4"]
+HSlider/icons/grabber = ExtResource("2_b4hj6")
+HSlider/icons/grabber_disabled = ExtResource("2_b4hj6")
+HSlider/icons/grabber_highlight = ExtResource("2_b4hj6")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_qsup6")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_qsup6")
+HSlider/styles/slider = SubResource("StyleBoxFlat_oamnl")
+
+[node name="WheelController" type="Node2D"]
+script = ExtResource("1_a8e1p")
+
+[node name="WheelSprite" type="Sprite2D" parent="."]
+position = Vector2(186, 186)
+scale = Vector2(0.722656, 0.722656)
+texture = SubResource("ViewportTexture_tjndv")
+region_rect = Rect2(124, 123, 265, 270)
+
+[node name="Wheel" parent="." instance=ExtResource("1_f3lpf")]
+own_world_3d = true
+world_3d = SubResource("World3D_0flqt")
+transparent_bg = true
+scaling_3d_mode = 1
+
+[node name="Slider" type="HSlider" parent="."]
+unique_name_in_owner = true
+offset_left = 95.0
+offset_top = 141.0
+offset_right = 276.0
+offset_bottom = 226.0
+theme = SubResource("Theme_rqkg4")
+min_value = -4.0
+max_value = 4.0
+step = 0.5
+rounded = true

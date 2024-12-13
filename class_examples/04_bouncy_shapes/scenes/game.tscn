@@ -1,0 +1,87 @@
+[gd_scene load_steps=6 format=3 uid="uid://dvehxsw6y0wua"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_w53he"]
+[ext_resource type="Texture2D" uid="uid://gh44j4brs22u" path="res://assets/png/background.png" id="2_6b6x8"]
+[ext_resource type="PackedScene" uid="uid://803i8rlyt0vf" path="res://scenes/rocker_joint.tscn" id="3_akt8k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1ta4y"]
+font_size = 19
+font_color = Color(0.65218, 0.65218, 0.65218, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_x8auq"]
+distance = -785.0
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_w53he")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(352, 352)
+scale = Vector2(0.586667, 0.586667)
+texture = ExtResource("2_6b6x8")
+
+[node name="UI" type="Node" parent="."]
+
+[node name="BouncinessSlider" type="HSlider" parent="UI"]
+offset_left = 17.0
+offset_top = 40.0
+offset_right = 163.0
+offset_bottom = 56.0
+max_value = 1.0
+step = 0.1
+value = 0.5
+
+[node name="BouncinessLabel" type="Label" parent="UI"]
+offset_left = 17.0
+offset_top = 10.0
+offset_right = 143.0
+offset_bottom = 37.0
+text = "Bounciness: 0.50
+"
+label_settings = SubResource("LabelSettings_1ta4y")
+horizontal_alignment = 1
+
+[node name="ShapeOptions" type="OptionButton" parent="UI"]
+offset_left = 591.0
+offset_top = 16.0
+offset_right = 686.0
+offset_bottom = 56.0
+selected = 0
+item_count = 3
+popup/item_0/text = "circle"
+popup/item_1/text = "square"
+popup/item_1/id = 1
+popup/item_2/text = "triangle"
+popup/item_2/id = 2
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+
+[node name="Floor" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(352, -89)
+shape = SubResource("WorldBoundaryShape2D_x8auq")
+
+[node name="LeftWall" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(786, 598)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_x8auq")
+
+[node name="LeftWall2" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(-86, 604)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_x8auq")
+
+[node name="Rockers" type="Node2D" parent="."]
+position = Vector2(9, 5)
+
+[node name="RockerJoint" parent="Rockers" instance=ExtResource("3_akt8k")]
+position = Vector2(501, 159)
+rocker_color = Color(0.723341, 0.353457, 0.605558, 1)
+
+[node name="RockerJoint2" parent="Rockers" instance=ExtResource("3_akt8k")]
+position = Vector2(174, 259)
+rocker_color = Color(0.378045, 0.684777, 0.910734, 1)
+
+[node name="RockerJoint3" parent="Rockers" instance=ExtResource("3_akt8k")]
+position = Vector2(387, 432)
+rocker_color = Color(0.737034, 0.647329, 0.396605, 1)
+
+[connection signal="value_changed" from="UI/BouncinessSlider" to="." method="_on_bounciness_slider_value_changed"]

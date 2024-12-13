@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctaebkyfu7ikr"]
+
+[ext_resource type="PackedScene" uid="uid://crikllwsq04y4" path="res://assets/blend/wheel.blend" id="2_imb3y"]
+[ext_resource type="PackedScene" uid="uid://dr8ch2dx6bwgv" path="res://scenes/ball.tscn" id="2_sli56"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6xg4s"]
+friction = 0.0
+rough = true
+bounce = 0.6
+
+[node name="Wheel" type="SubViewport"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.8442, 0, 0)
+
+[node name="wheel" parent="." instance=ExtResource("2_imb3y")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.000717103, 0, -0.000717044)
+
+[node name="Ball" parent="." instance=ExtResource("2_sli56")]
+physics_material_override = SubResource("PhysicsMaterial_6xg4s")
