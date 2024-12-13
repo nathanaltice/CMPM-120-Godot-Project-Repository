@@ -4,7 +4,7 @@ This demo contains introductory examples of basic UI, pin joints, instantiation 
 
 ## UI Sliders
 
-Apart from setting the minium width and height, the UI slider and option dropdown are default.  The value for each is captured in `game.gd`.
+Apart from setting the minimum width and height, the UI slider and option dropdown are default.  The value for each is captured in `game.gd`.
 
 ```gd
 bounciness_slider.value # the current value of the slider
@@ -13,7 +13,7 @@ shape_options.selected # the index of the selected item from the drop down (ie. 
 
 ## Pin Joints
 
-A pin joint connects two physics objects as though you had stuck a pin through them. You string pins together to make something like rope (see the [Dangle Jam](/08_dangle_jam/) example) but you can also combine a `StaticBody2D` with a `RigidBody2D` to get the rocker action you see here. 
+A pin joint connects two physics objects as though you had stuck a pin through them. You string pins together to make something like rope (see the [Dangle Jam](/08_dangle_jam/) example) but you can also combine a `StaticBody2D` with a `RigidBody2D` to get the rocker action you see here.
 
 The root of each [rocker_joint.tscn](./scenes/rocker_joint.tscn) is a `PinJoint2D`, which (see inspector) has the "Pin" and "Curve" nodes assigned in its "Joint2D" settings.
 
